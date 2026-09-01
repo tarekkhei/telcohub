@@ -5,16 +5,23 @@ export function Modal({
   title,
   children,
   onClose,
+  size = 'md',
 }: {
   open: boolean
   title: string
   children: ReactNode
   onClose?: () => void
+  size?: 'md' | 'lg' | 'xl'
 }) {
   if (!open) return null
+  const widths = {
+    md: 'max-w-lg',
+    lg: 'max-w-2xl',
+    xl: 'max-w-4xl',
+  }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-950/40 p-4">
-      <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl">
+      <div className={`w-full ${widths[size]} max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl`}>
         <div className="mb-4 flex items-start justify-between">
           <h3 className="text-lg font-semibold text-navy-900">{title}</h3>
           {onClose ? (

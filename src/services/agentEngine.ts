@@ -179,6 +179,55 @@ export function generateAgentReply(
 
   if (q.startsWith('/')) return handleSlash(q, ctx, mode, storyStep)
 
+  if (
+    ctx.page === 'marketplace' ||
+    ctx.page === 'connector-detail' ||
+    has(q, 'connector marketplace', 'add connector', 'semantic discovery')
+  ) {
+    if (has(q, 'salesforce')) {
+      return reply([
+        {
+          type: 'text',
+          text: 'Salesforce supplies customer, account, case and order context. Coreveo uses it to correlate complaints with technical exceptions and can create or update cases after a verified resolution. Writes are supervised.',
+        },
+      ], { actions: [{ id: 'sf', label: 'Open Salesforce', href: '/marketplace/salesforce' }] })
+    }
+    if (has(q, 'servicenow')) {
+      return reply([
+        {
+          type: 'text',
+          text: 'ServiceNow is a certified connector in this demo. Coreveo searches related incidents and knowledge, and can create an escalation. Updating or closing an incident requires approval.',
+        },
+      ], { actions: [{ id: 'sn', label: 'Open ServiceNow', href: '/marketplace/servicenow' }] })
+    }
+    if (has(q, 'titan', 'hss', 'governance')) {
+      return reply([
+        {
+          type: 'text',
+          text: 'Titan HSS lookup is read-only. Create, suspend and resume require approval. Delete is restricted and will not run in this demo.',
+        },
+      ], { risk: 'read_only', actions: [{ id: 'hss', label: 'Open Titan HSS', href: '/marketplace/titan-hss' }] })
+    }
+    if (has(q, 'semantic')) {
+      return reply([
+        {
+          type: 'text',
+          text: 'After an API contract is imported, Coreveo labels each endpoint with capability, entity, lifecycle stage, risk and execution policy. GET /accounts/{id} is Retrieve Billing Account, read-only. POST /subscriber is Create Network Subscriber, approval required.',
+        },
+      ])
+    }
+    return reply([
+      {
+        type: 'text',
+        text: 'Connect DID inventory, billing, provisioning, HSS, CRM and ServiceNow to move from visibility to correlation and supervised resolution. The marketplace is synthetic — no live vendor APIs are called.',
+      },
+      {
+        type: 'text',
+        text: 'Start with Salesforce and ServiceNow for customer/incident context, MIND Billing and Titan HSS for the activation path.',
+      },
+    ], { actions: [{ id: 'mkt', label: 'Open Marketplace', href: '/marketplace' }] })
+  }
+
   if (storyStep === 'asked_activations' && (q === 'yes' || has(q, 'investigate', 'go ahead', 'please'))) {
     return investigateActivations()
   }

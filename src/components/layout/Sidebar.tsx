@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   Lightbulb,
   Network,
+  Plug,
   Settings,
   ShieldAlert,
   Workflow,
@@ -23,6 +24,7 @@ const NAV = [
   { to: '/reports', label: 'Reports', icon: FileBarChart },
   { to: '/insights', label: 'AI Insights', icon: Lightbulb },
   { to: '/knowledge', label: 'Knowledge', icon: BookOpen },
+  { to: '/marketplace', label: 'Marketplace', icon: Plug },
   { to: '/settings', label: 'Settings', icon: Settings },
 ]
 
@@ -35,8 +37,8 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
             <Bot className="h-5 w-5 text-white" />
           </div>
           <div>
-            <p className="text-sm font-semibold tracking-tight text-white">Coreveo AI</p>
-            <p className="text-[11px] text-navy-300">Exception Resolution</p>
+            <p className="text-sm font-semibold tracking-tight text-white">TelcoHub</p>
+            <p className="text-[11px] text-navy-300">powered by Coreveo AI</p>
           </div>
         </div>
       </div>

@@ -71,6 +71,17 @@ export const SUGGESTIONS: Record<AgentPage, string[]> = {
     'Which pattern matches the current HSS failure?',
     'How has this pattern been resolved historically?',
   ],
+  marketplace: [
+    'Which systems should we connect first?',
+    'What does Salesforce give Coreveo?',
+    'How is ServiceNow used in investigations?',
+    'Show me Titan HSS governance.',
+  ],
+  'connector-detail': [
+    'What can Coreveo do with this system?',
+    'Which actions require approval?',
+    'Explain semantic discovery.',
+  ],
   settings: [
     'Which systems were used in the last investigation?',
     'Is Titan HSS healthy?',

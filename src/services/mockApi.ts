@@ -8,7 +8,9 @@ import { ROOT_CAUSE_STATS } from '../data/rootCauses'
 import { ALL_SERVICES } from '../data/services'
 import { CONNECTED_SYSTEMS } from '../data/systems'
 import { buildExceptionDetail } from '../data/buildDetail'
+import { connectorRuntime } from './connectorRuntime'
 import type { ExceptionDetail, ExceptionRecord, ExceptionStatus, Filters, ServiceRecord } from '../types'
+import type { ConnectorQuery } from '../types/connectors'
 
 const delay = (ms = 320) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -101,6 +103,26 @@ export const mockApi = {
 
   exceptionTypes() {
     return [...new Set(ALL_EXCEPTIONS.map((item) => item.exceptionType))].sort()
+  },
+
+  async listConnectors(query: ConnectorQuery = {}, connectedIds: string[] = []) {
+    await delay(220)
+    return connectorRuntime.list(query, connectedIds)
+  },
+
+  async getConnector(id: string, connectedIds: string[] = []) {
+    await delay(200)
+    return connectorRuntime.get(id, connectedIds)
+  },
+
+  async testConnector(id: string) {
+    await delay(720)
+    return connectorRuntime.test(id)
+  },
+
+  async discoverConnector(id: string) {
+    await delay(480)
+    return connectorRuntime.discover(id)
   },
 }
 

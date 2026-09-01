@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react'
+import { DEFAULT_CONNECTED_CONNECTOR_IDS } from '../connectors/catalog'
 import { ALL_EXCEPTIONS } from '../data/generateExceptions'
 import { applyStatus } from '../services/mockApi'
 import type { ExceptionRecord, ExceptionStatus, Filters } from '../types'
@@ -11,6 +12,8 @@ interface AppState {
   updateExceptionStatus: (id: string, status: ExceptionStatus) => void
   resolutionOutcome: Record<string, 'idle' | 'running' | 'verified'>
   setResolutionOutcome: (id: string, value: 'idle' | 'running' | 'verified') => void
+  connectedConnectorIds: string[]
+  activateConnector: (id: string) => void
 }
 
 const DEFAULT_FILTERS: Filters = {
@@ -31,6 +34,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   )
   const [filters, setFiltersState] = useState<Filters>(DEFAULT_FILTERS)
   const [resolutionOutcome, setOutcome] = useState<Record<string, 'idle' | 'running' | 'verified'>>({})
+  const [connectedConnectorIds, setConnectedConnectorIds] = useState<string[]>(DEFAULT_CONNECTED_CONNECTOR_IDS)
 
   const setFilters = useCallback((next: Partial<Filters>) => {
     setFiltersState((prev) => ({ ...prev, ...next }))
@@ -46,6 +50,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     setOutcome((prev) => ({ ...prev, [id]: value }))
   }, [])
 
+  const activateConnector = useCallback((id: string) => {
+    setConnectedConnectorIds((prev) => (prev.includes(id) ? prev : [...prev, id]))
+  }, [])
+
   const value = useMemo(
     () => ({
       exceptions,
@@ -55,8 +63,20 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       updateExceptionStatus,
       resolutionOutcome,
       setResolutionOutcome,
+      connectedConnectorIds,
+      activateConnector,
     }),
-    [exceptions, filters, resetFilters, resolutionOutcome, setFilters, setResolutionOutcome, updateExceptionStatus],
+    [
+      activateConnector,
+      connectedConnectorIds,
+      exceptions,
+      filters,
+      resetFilters,
+      resolutionOutcome,
+      setFilters,
+      setResolutionOutcome,
+      updateExceptionStatus,
+    ],
   )
 
   return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>

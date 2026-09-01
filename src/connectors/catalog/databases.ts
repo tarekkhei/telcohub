@@ -1,0 +1,96 @@
+import { defineConnector } from './helpers'
+import type { CoreveoConnectorDefinition } from '../../types/connectors'
+
+const DB_NOTE =
+  'Coreveo recommends read-only database access for operational investigation.'
+
+const dbActions = [
+  { name: 'SELECT', governance: 'READ_ONLY' as const },
+  { name: 'Stored Procedure Read', governance: 'READ_ONLY' as const, description: 'Review required before enabling.' },
+  { name: 'INSERT', governance: 'RESTRICTED' as const },
+  { name: 'UPDATE', governance: 'RESTRICTED' as const },
+  { name: 'DELETE', governance: 'RESTRICTED' as const },
+]
+
+const dbCapabilities = [
+  'Read-only queries',
+  'Operational state lookup',
+  'Transaction correlation',
+  'Historical analysis',
+]
+
+export const DATABASE_CONNECTORS: CoreveoConnectorDefinition[] = [
+  defineConnector({
+    id: 'oracle-db',
+    name: 'Oracle Database',
+    vendor: 'Oracle',
+    category: 'Databases',
+    featured: true,
+    kind: 'pack',
+    icon: 'database',
+    shortDescription: 'Read-only operational queries and historical analysis.',
+    description: 'Oracle Database read-only investigation access.',
+    overview: `${DB_NOTE} Oracle Database is used to correlate billing, order and provisioning records that are not exposed through APIs.`,
+    connectionMethods: ['SQL (read-only)', 'Wallet / TLS'],
+    connectionType: 'SQL • TLS',
+    entities: ['Table', 'View', 'Transaction', 'Procedure'],
+    capabilities: dbCapabilities,
+    actions: dbActions,
+    certificationStatus: 'AVAILABLE',
+    databaseReadOnlyNote: true,
+  }),
+  defineConnector({
+    id: 'postgresql',
+    name: 'PostgreSQL',
+    vendor: 'PostgreSQL',
+    category: 'Databases',
+    kind: 'pack',
+    icon: 'database',
+    shortDescription: 'Read-only queries for operational correlation.',
+    description: 'PostgreSQL read-only investigation access.',
+    overview: `${DB_NOTE} PostgreSQL is typically used for application and inventory state.`,
+    connectionMethods: ['SQL (read-only)', 'TLS'],
+    connectionType: 'SQL • TLS',
+    entities: ['Table', 'View', 'Transaction'],
+    capabilities: dbCapabilities,
+    actions: dbActions,
+    certificationStatus: 'AVAILABLE',
+    databaseReadOnlyNote: true,
+  }),
+  defineConnector({
+    id: 'sql-server',
+    name: 'Microsoft SQL Server',
+    vendor: 'Microsoft',
+    category: 'Databases',
+    kind: 'pack',
+    icon: 'database',
+    shortDescription: 'Read-only operational state and history.',
+    description: 'SQL Server read-only investigation access.',
+    overview: `${DB_NOTE} SQL Server is commonly used for BSS and CRM sidecars.`,
+    connectionMethods: ['T-SQL (read-only)', 'TLS'],
+    connectionType: 'T-SQL • TLS',
+    entities: ['Table', 'View', 'Stored Procedure'],
+    capabilities: dbCapabilities,
+    actions: dbActions,
+    certificationStatus: 'AVAILABLE',
+    databaseReadOnlyNote: true,
+  }),
+  defineConnector({
+    id: 'mysql',
+    name: 'MySQL / MariaDB',
+    vendor: 'Oracle / MariaDB',
+    category: 'Databases',
+    kind: 'pack',
+    icon: 'database',
+    shortDescription: 'Read-only lookup and historical analysis.',
+    description: 'MySQL and MariaDB read-only investigation access.',
+    overview: `${DB_NOTE} MySQL/MariaDB is used for operational application state.`,
+    connectionMethods: ['SQL (read-only)', 'TLS'],
+    connectionType: 'SQL • TLS',
+    entities: ['Table', 'View', 'Transaction'],
+    capabilities: dbCapabilities,
+    actions: dbActions,
+    certificationStatus: 'AVAILABLE',
+    databaseReadOnlyNote: true,
+  }),
+]

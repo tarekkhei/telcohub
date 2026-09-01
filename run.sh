@@ -8,5 +8,5 @@ if [[ ! -d node_modules ]]; then
   npm install
 fi
 
-echo "Starting Coreveo AI at http://localhost:5173"
+echo "Starting TelcoHub at http://localhost:5173"
 npm run dev

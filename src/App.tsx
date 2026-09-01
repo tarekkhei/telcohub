@@ -4,10 +4,12 @@ import { AgentProvider } from './context/AgentContext'
 import { AppStateProvider } from './context/AppStateContext'
 import { AIInsights } from './pages/AIInsights'
 import { CommandCenter } from './pages/CommandCenter'
+import { ConnectorDetail } from './pages/ConnectorDetail'
 import { ExceptionDetail } from './pages/ExceptionDetail'
 import { Exceptions } from './pages/Exceptions'
 import { Investigations } from './pages/Investigations'
 import { Knowledge } from './pages/Knowledge'
+import { Marketplace } from './pages/Marketplace'
 import { Reports } from './pages/Reports'
 import { RootCauses } from './pages/RootCauses'
 import { Services } from './pages/Services'
@@ -29,6 +31,8 @@ export default function App() {
             <Route path="reports" element={<Reports />} />
             <Route path="insights" element={<AIInsights />} />
             <Route path="knowledge" element={<Knowledge />} />
+            <Route path="marketplace" element={<Marketplace />} />
+            <Route path="marketplace/:id" element={<ConnectorDetail />} />
             <Route path="settings" element={<Settings />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>

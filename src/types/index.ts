@@ -257,6 +257,8 @@ export type AgentPage =
   | 'insights'
   | 'knowledge'
   | 'settings'
+  | 'marketplace'
+  | 'connector-detail'
 
 export type ActionRisk = 'read_only' | 'safe' | 'approval' | 'restricted'
 

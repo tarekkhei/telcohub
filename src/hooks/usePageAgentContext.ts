@@ -14,6 +14,8 @@ function pageFromPath(pathname: string): AgentPage {
   if (pathname.startsWith('/reports')) return 'reports'
   if (pathname.startsWith('/insights')) return 'insights'
   if (pathname.startsWith('/knowledge')) return 'knowledge'
+  if (pathname.startsWith('/marketplace/')) return 'connector-detail'
+  if (pathname.startsWith('/marketplace')) return 'marketplace'
   if (pathname.startsWith('/settings')) return 'settings'
   return 'command-center'
 }

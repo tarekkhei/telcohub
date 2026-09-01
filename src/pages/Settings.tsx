@@ -1,4 +1,6 @@
+import { useNavigate } from 'react-router-dom'
 import { SoftBadge } from '../components/ui/Badge'
+import { Button } from '../components/ui/Button'
 import { Card, CardTitle } from '../components/ui/Card'
 import { DemoBanner } from '../components/ui/DemoBanner'
 import { PageHeader } from '../components/ui/PageHeader'
@@ -7,6 +9,7 @@ import { useAsyncData } from '../hooks/useAsyncData'
 import { mockApi } from '../services/mockApi'
 
 export function Settings() {
+  const navigate = useNavigate()
   const result = useAsyncData(() => mockApi.systems(), [])
   if (result.loading || !result.data) return <PageSkeleton />
 
@@ -16,6 +19,11 @@ export function Settings() {
         eyebrow="Integrations"
         title="Settings"
         subtitle="Connected OSS/BSS systems the agent can query during investigation. No live connections in this mockup."
+        actions={
+          <Button variant="secondary" onClick={() => navigate('/marketplace')}>
+            Connector Marketplace
+          </Button>
+        }
       />
       <DemoBanner>Statuses, latency and event counts are synthetic.</DemoBanner>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

@@ -36,11 +36,20 @@ export function StatusBadge({ status }: { status: ExceptionStatus }) {
   )
 }
 
-export function SoftBadge({ children, tone = 'navy' }: { children: ReactNode; tone?: 'navy' | 'ai' | 'success' }) {
+export function SoftBadge({
+  children,
+  tone = 'navy',
+}: {
+  children: ReactNode
+  tone?: 'navy' | 'ai' | 'success' | 'warning' | 'accent' | 'slate'
+}) {
   const tones = {
     navy: 'bg-navy-50 text-navy-700',
     ai: 'bg-ai-soft text-ai',
     success: 'bg-success-soft text-success',
+    warning: 'bg-warning-soft text-warning',
+    accent: 'bg-accent-soft text-accent',
+    slate: 'bg-slate-100 text-slate-600',
   }
   return <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${tones[tone]}`}>{children}</span>
 }

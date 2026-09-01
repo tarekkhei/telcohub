@@ -1,4 +1,4 @@
-# Coreveo AI — Exception Resolution
+# TelcoHub powered by Coreveo AI
 
 Synthetic frontend mockup of an agentic telecom operations product. Coreveo reconstructs failed business transactions across OSS/BSS systems and drives them from exception to verified outcome.
 
@@ -31,4 +31,3 @@ Open the printed local URL (typically `http://localhost:5173`).
 ## Stack
 
 React, TypeScript, Tailwind CSS, Recharts, Lucide, React Router. Mock data lives in `src/data` and is served through `src/services/mockApi.ts` so a REST API can replace it later.
-# telcohub
