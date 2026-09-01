@@ -1,0 +1,68 @@
+import type { ConnectedSystem } from '../types'
+
+export const CONNECTED_SYSTEMS: ConnectedSystem[] = [
+  {
+    name: 'Ordering Platform',
+    status: 'connected',
+    lastSync: '2026-08-29 14:27:02',
+    latencyMs: 84,
+    eventsProcessed: 18420,
+    description: 'Customer orders, payment confirmation, and service intent.',
+  },
+  {
+    name: 'Billing / BSS',
+    status: 'connected',
+    lastSync: '2026-08-29 14:26:51',
+    latencyMs: 112,
+    eventsProcessed: 22104,
+    description: 'Account state, recurring charges, and service quantities.',
+  },
+  {
+    name: 'SIM Inventory',
+    status: 'connected',
+    lastSync: '2026-08-29 14:26:44',
+    latencyMs: 67,
+    eventsProcessed: 9033,
+    description: 'SIM/eSIM assignment and profile lifecycle.',
+  },
+  {
+    name: 'Provisioning API',
+    status: 'connected',
+    lastSync: '2026-08-29 14:26:39',
+    latencyMs: 241,
+    eventsProcessed: 15612,
+    description: 'Network subscriber create, modify, and deactivate operations.',
+  },
+  {
+    name: 'Titan HSS',
+    status: 'connected',
+    lastSync: '2026-08-29 14:26:18',
+    latencyMs: 198,
+    eventsProcessed: 14088,
+    description: 'Home subscriber server identity and authentication state.',
+  },
+  {
+    name: 'Application Logs',
+    status: 'connected',
+    lastSync: '2026-08-29 14:27:08',
+    latencyMs: 41,
+    eventsProcessed: 882441,
+    description: 'Correlated application and integration traces.',
+  },
+  {
+    name: 'ServiceNow',
+    status: 'connected',
+    lastSync: '2026-08-29 14:25:12',
+    latencyMs: 156,
+    eventsProcessed: 2144,
+    description: 'Incident history and similar-ticket matching.',
+  },
+  {
+    name: 'Network Monitoring',
+    status: 'demo',
+    lastSync: 'Demo feed',
+    latencyMs: 0,
+    eventsProcessed: 0,
+    description: 'Synthetic NOC telemetry for demonstration only.',
+  },
+]
