@@ -8,7 +8,7 @@ export function CategoryChart({ data }: { data: CategoryCount[] }) {
   return (
     <Card>
       <CardTitle title="Exceptions by category" subtitle="Where failed business transactions concentrate." />
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-[200px_1fr]">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-[180px_1fr] md:grid-cols-[200px_1fr]">
         <div className="h-52">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>

@@ -11,6 +11,7 @@ import {
   Settings,
   ShieldAlert,
   Workflow,
+  X,
 } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 import { CONNECTED_SYSTEM_COUNT } from '../../data/constants'
@@ -30,16 +31,26 @@ const NAV = [
 
 export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   return (
-    <aside className="flex h-full w-[260px] shrink-0 flex-col border-r border-navy-800 bg-navy-900 text-navy-100">
+    <aside className="flex h-full min-h-0 w-full flex-col overflow-y-auto border-r border-navy-800 bg-navy-900 text-navy-100 lg:sticky lg:top-0 lg:h-dvh">
       <div className="border-b border-navy-800 px-5 py-5">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent">
-            <Bot className="h-5 w-5 text-white" />
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent">
+              <Bot className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold tracking-tight text-white">TelcoHub</p>
+              <p className="text-[11px] text-navy-300">powered by Coreveo AI</p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm font-semibold tracking-tight text-white">TelcoHub</p>
-            <p className="text-[11px] text-navy-300">powered by Coreveo AI</p>
-          </div>
+          <button
+            type="button"
+            onClick={onNavigate}
+            className="rounded-lg p-1.5 text-navy-300 hover:bg-navy-800 hover:text-white lg:hidden"
+            aria-label="Close navigation"
+          >
+            <X className="h-4 w-4" />
+          </button>
         </div>
       </div>
 

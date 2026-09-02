@@ -9,7 +9,7 @@ export function TrendChart({ data }: { data: TrendPoint[] }) {
         title="7-day exception trend"
         subtitle="Resolved volume rises as the agent reuses known operational patterns."
       />
-      <div className="h-64">
+      <div className="h-52 md:h-64">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
             <CartesianGrid stroke="#e4ebf2" vertical={false} />

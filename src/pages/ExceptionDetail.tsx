@@ -51,7 +51,7 @@ export function ExceptionDetail() {
       <ExceptionHeader detail={{ ...detail, status: verified ? 'verified' : detail.status }} />
       <LifecycleStrip active={lifecycle} />
       <TransactionJourney steps={journey} />
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <SystemCorrelation systems={detail.systems} />
         <InvestigationTimeline events={detail.timeline} durationSeconds={detail.investigationSeconds} />
       </div>
@@ -67,7 +67,7 @@ export function ExceptionDetail() {
         onIncident={() => resolution.notify('Incident created in ServiceNow (demo).')}
         onDismiss={() => resolution.notify('Recommendation dismissed for this session (demo).')}
       />
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <VerifyPanel detail={detail} verified={verified} />
         {id === HERO_EXCEPTION_ID || detail.customersImpacted > 1 ? (
           <BlastRadius relatedCount={detail.diagnosis.blastRadius} />
@@ -83,7 +83,7 @@ export function ExceptionDetail() {
         onClose={resolution.complete ? resolution.close : undefined}
       />
       {resolution.toast ? (
-        <div className="fixed bottom-6 right-6 rounded-lg bg-navy-900 px-4 py-3 text-sm text-white shadow-xl">
+        <div className="fixed bottom-24 left-4 right-4 z-30 rounded-lg bg-navy-900 px-4 py-3 text-sm text-white shadow-xl md:left-auto md:right-6 md:bottom-6">
           {resolution.toast}
         </div>
       ) : null}

@@ -26,16 +26,18 @@ export function ConnectorCard({ connector }: { connector: ConnectorInstance }) {
     >
       <Card className="h-full transition hover:border-accent/40 hover:shadow-[0_8px_24px_rgba(37,99,235,0.08)]">
         <div className="flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-navy-50 text-navy-700">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-navy-50 text-navy-700">
               <ConnectorIcon name={connector.icon} />
             </div>
-            <div>
+            <div className="min-w-0">
               <h3 className="text-sm font-semibold text-navy-900">{connector.name}</h3>
               <p className="text-[11px] font-medium uppercase tracking-wide text-navy-400">{connector.category}</p>
             </div>
           </div>
-          <ConnectorStatusBadge status={connector.displayStatus} />
+          <div className="shrink-0">
+            <ConnectorStatusBadge status={connector.displayStatus} />
+          </div>
         </div>
         <p className="mt-3 text-sm text-navy-600">{connector.shortDescription}</p>
         <p className="mt-2 text-[11px] text-navy-400">{connector.connectionType}</p>

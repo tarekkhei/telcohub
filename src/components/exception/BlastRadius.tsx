@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { BLAST_RADIUS_REGIONS } from '../../data/kpis'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { Button } from '../ui/Button'
 import { Card, CardTitle } from '../ui/Card'
 
 export function BlastRadius({ relatedCount }: { relatedCount: number }) {
+  const isTablet = useMediaQuery('(min-width: 768px)')
   return (
     <Card>
       <CardTitle
@@ -17,9 +19,9 @@ export function BlastRadius({ relatedCount }: { relatedCount: number }) {
       </p>
       <div className="mt-4 h-48">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={BLAST_RADIUS_REGIONS} layout="vertical" margin={{ left: 16 }}>
+          <BarChart data={BLAST_RADIUS_REGIONS} layout="vertical" margin={{ left: isTablet ? 16 : 4, right: 8 }}>
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="name" width={110} tick={{ fill: '#1a2b45', fontSize: 12 }} />
+            <YAxis type="category" dataKey="name" width={isTablet ? 110 : 72} tick={{ fill: '#1a2b45', fontSize: 12 }} />
             <Tooltip />
             <Bar dataKey="value" fill="#2563eb" radius={[0, 6, 6, 0]} />
           </BarChart>

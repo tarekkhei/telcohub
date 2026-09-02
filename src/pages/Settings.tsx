@@ -37,7 +37,7 @@ export function Settings() {
                 {system.status === 'connected' ? 'Connected' : 'Demo'}
               </SoftBadge>
             </div>
-            <dl className="grid grid-cols-3 gap-3 text-sm">
+            <dl className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
               <div>
                 <dt className="text-xs text-navy-400">Last synchronization</dt>
                 <dd className="mt-1 font-medium text-navy-800">{system.lastSync}</dd>

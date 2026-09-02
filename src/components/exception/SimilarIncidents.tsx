@@ -7,7 +7,20 @@ export function SimilarIncidents({ incidents }: { incidents: SimilarIncident[] }
       <div className="px-5 pt-5">
         <CardTitle title="Similar incidents" subtitle="Organizational knowledge reused instead of starting from a blank ticket." />
       </div>
-      <div className="overflow-x-auto">
+      <div className="divide-y divide-navy-50 md:hidden">
+        {incidents.map((item) => (
+          <div key={item.id} className="space-y-1 px-4 py-3">
+            <div className="flex items-start justify-between gap-2">
+              <p className="text-sm font-medium text-navy-900">{item.id}</p>
+              <span className="text-xs font-semibold text-ai">{item.confidence}%</span>
+            </div>
+            <p className="text-xs text-navy-500">{item.date}</p>
+            <p className="text-sm text-navy-700">{item.cause}</p>
+            <p className="text-xs text-navy-600">{item.resolution}</p>
+          </div>
+        ))}
+      </div>
+      <div className="hidden overflow-x-auto md:block">
         <table className="w-full min-w-[640px] text-left text-sm">
           <thead className="border-y border-navy-100 bg-navy-50 text-[11px] uppercase tracking-wide text-navy-500">
             <tr>

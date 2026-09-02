@@ -143,7 +143,7 @@ export function ConnectorWizard({
         {step === 7 && selected ? <ActivateStep connector={selected} /> : null}
       </div>
 
-      <div className="mt-6 flex justify-between">
+      <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-between">
         <Button variant="ghost" onClick={step === 0 ? onClose : () => setStep((value) => value - 1)}>
           {step === 0 ? 'Cancel' : 'Back'}
         </Button>
@@ -223,15 +223,15 @@ function CredentialsStep({ connector, method }: { connector: ConnectorInstance; 
       </p>
       <label className="block text-sm">
         <span className="text-xs text-navy-500">Client ID / Username</span>
-        <input readOnly value="demo-coreveo-client" className="mt-1 w-full rounded-lg border border-navy-200 px-3 py-2" />
+        <input readOnly value="demo-coreveo-client" className="mt-1 w-full rounded-lg border border-navy-200 px-3 py-2 text-base md:text-sm" />
       </label>
       <label className="block text-sm">
         <span className="text-xs text-navy-500">Secret / Token</span>
-        <input readOnly type="password" value="synthetic-secret" className="mt-1 w-full rounded-lg border border-navy-200 px-3 py-2" />
+        <input readOnly type="password" value="synthetic-secret" className="mt-1 w-full rounded-lg border border-navy-200 px-3 py-2 text-base md:text-sm" />
       </label>
       <label className="block text-sm">
         <span className="text-xs text-navy-500">Environment</span>
-        <input readOnly value="sandbox.demo.coreveo.local" className="mt-1 w-full rounded-lg border border-navy-200 px-3 py-2" />
+        <input readOnly value="sandbox.demo.coreveo.local" className="mt-1 w-full rounded-lg border border-navy-200 px-3 py-2 text-base md:text-sm" />
       </label>
     </div>
   )
@@ -318,7 +318,7 @@ function PermissionsStep({ connector }: { connector: ConnectorInstance }) {
         Restricted actions cannot be enabled in the public demo. Write actions remain simulated.
       </p>
       {connector.actions.map((action) => (
-        <div key={action.name} className="flex items-center justify-between rounded-lg border border-navy-100 px-3 py-2 text-sm">
+        <div key={action.name} className="flex flex-col gap-2 rounded-lg border border-navy-100 px-3 py-2 text-sm sm:flex-row sm:items-center sm:justify-between">
           <label className="flex items-center gap-2">
             <input type="checkbox" defaultChecked={action.governance !== 'RESTRICTED'} disabled={action.governance === 'RESTRICTED'} />
             {action.name}

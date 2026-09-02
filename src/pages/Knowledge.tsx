@@ -23,7 +23,7 @@ export function Knowledge() {
             <p className="mt-1 text-xs text-navy-500">
               Used {pattern.timesUsed} times · {pattern.successRate}% historical resolution success
             </p>
-            <div className="mt-4 grid grid-cols-1 gap-5 lg:grid-cols-3">
+            <div className="mt-4 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
               <div>
                 <h3 className="text-xs font-semibold uppercase tracking-wide text-navy-400">Conditions</h3>
                 <ul className="mt-2 list-disc space-y-1 pl-4 text-sm text-navy-700">

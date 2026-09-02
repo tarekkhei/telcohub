@@ -19,7 +19,7 @@ function KpiCard({
   sparkColor?: string
 }) {
   return (
-    <Card className="p-4">
+    <Card className="min-w-0">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-xs font-medium text-navy-500">{label}</p>
@@ -30,8 +30,12 @@ function KpiCard({
         </div>
       </div>
       <div className="mt-3 flex items-end justify-between gap-2">
-        <p className="text-xs text-navy-500">{hint}</p>
-        {spark ? <Sparkline values={spark} color={sparkColor} /> : null}
+        <p className="min-w-0 text-xs text-navy-500">{hint}</p>
+        {spark ? (
+          <div className="hidden shrink-0 sm:block">
+            <Sparkline values={spark} color={sparkColor} />
+          </div>
+        ) : null}
       </div>
     </Card>
   )

@@ -17,7 +17,7 @@ export function AskCoreveo() {
   }
 
   return (
-    <section className="rounded-2xl border border-indigo-100 bg-white p-5 shadow-[0_1px_2px_rgba(15,28,46,0.04),0_12px_32px_rgba(91,92,224,0.08)]">
+    <section className="rounded-2xl border border-indigo-100 bg-white p-4 shadow-[0_1px_2px_rgba(15,28,46,0.04),0_12px_32px_rgba(91,92,224,0.08)] sm:p-5">
       <div className="mb-3 flex items-center gap-2">
         <Sparkles className="h-4 w-4 text-ai" />
         <div>
@@ -43,7 +43,7 @@ export function AskCoreveo() {
           }}
           rows={2}
           placeholder="Why are wireless activations failing today?"
-          className="min-h-[56px] flex-1 resize-none bg-transparent text-sm text-navy-800 outline-none placeholder:text-navy-400"
+          className="min-h-[56px] flex-1 resize-none bg-transparent text-base text-navy-800 outline-none placeholder:text-navy-400 md:text-sm"
         />
         <button
           type="submit"

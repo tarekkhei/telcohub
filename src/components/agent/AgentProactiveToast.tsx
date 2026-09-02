@@ -7,7 +7,7 @@ export function AgentProactiveToast() {
   if (!proactive || open) return null
 
   return (
-    <div className="fixed bottom-24 right-6 z-30 w-80 rounded-xl border border-indigo-100 bg-white p-4 shadow-xl">
+    <div className="fixed right-4 left-4 z-30 w-auto rounded-xl border border-indigo-100 bg-white p-4 shadow-xl bottom-[calc(5.5rem+env(safe-area-inset-bottom))] md:left-auto md:right-6 md:w-80">
       <p className="text-[11px] font-semibold uppercase tracking-wide text-ai">{proactive.title}</p>
       <p className="mt-2 text-sm leading-5 text-navy-800">{proactive.body}</p>
       <p className="mt-2 text-xs font-semibold text-ai">{proactive.metric}</p>

@@ -18,7 +18,7 @@ export function RootCausePanel({ diagnosis }: { diagnosis: Diagnosis }) {
           ))}
         </ol>
       </div>
-      <div className="mt-5 grid grid-cols-2 gap-3">
+      <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="rounded-lg bg-white px-3 py-3">
           <p className="text-xs text-navy-500">Possible blast radius</p>
           <p className="text-lg font-semibold text-navy-900">{diagnosis.blastRadius} customer activations</p>

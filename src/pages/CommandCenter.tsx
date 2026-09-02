@@ -35,7 +35,7 @@ export function CommandCenter() {
       <FilterBar filters={filters} onChange={setFilters} />
       <KpiGrid kpi={snapshot.data.kpi} sparklines={snapshot.data.sparklines} />
       <ExceptionFunnel stages={snapshot.data.funnel} />
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <CategoryChart data={snapshot.data.categories} />
         <TrendChart data={snapshot.data.trend} />
       </div>

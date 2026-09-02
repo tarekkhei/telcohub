@@ -9,7 +9,7 @@ export function ExceptionFunnel({ stages }: { stages: FunnelStage[] }) {
         title="Exception lifecycle"
         subtitle="Coreveo manages the full path from detection to verified outcome — not just an alert count."
       />
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
         {stages.map((stage, index) => {
           const width = Math.max(36, Math.round((stage.count / max) * 100))
           return (

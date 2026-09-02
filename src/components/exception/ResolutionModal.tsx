@@ -35,7 +35,7 @@ export function ResolutionModal({
         })}
       </ul>
       {complete ? (
-        <div className="mt-5 grid grid-cols-3 gap-3 rounded-xl bg-success-soft p-4 text-center">
+        <div className="mt-5 grid grid-cols-1 gap-3 rounded-xl bg-success-soft p-4 text-center sm:grid-cols-3">
           <div>
             <p className="text-xs text-success">Resolution time</p>
             <p className="font-semibold text-navy-900">1m 12s</p>

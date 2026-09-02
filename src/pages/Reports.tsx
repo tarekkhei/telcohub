@@ -26,7 +26,7 @@ export function Reports() {
 
       <section>
         <h2 className="mb-3 text-sm font-semibold text-navy-900">Operations performance</h2>
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Metric label="Total exceptions" value={String(metrics.totalExceptions)} />
           <Metric label="AI diagnosis rate" value={`${metrics.aiDiagnosisRate}%`} />
           <Metric label="Resolution rate" value={`${metrics.resolutionRate}%`} />
@@ -39,7 +39,7 @@ export function Reports() {
 
       <section>
         <h2 className="mb-3 text-sm font-semibold text-navy-900">Business impact</h2>
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
           <Metric label="Customers affected" value={String(metrics.customersAffected)} />
           <Metric label="Customers recovered" value={String(metrics.customersRecovered)} />
           <Metric label="Potential revenue protected" value={`$${metrics.revenueProtected.toLocaleString()}`} />
@@ -50,7 +50,7 @@ export function Reports() {
 
       <section>
         <h2 className="mb-3 text-sm font-semibold text-navy-900">Trend report</h2>
-        <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           <MiniLine title="MTTR over time" data={trends.mttr} dataKey="minutes" />
           <MiniLine title="AI diagnosis rate" data={trends.diagnosisRate} dataKey="rate" />
           <MiniLine title="Auto-resolution rate" data={trends.autoResolution} dataKey="rate" />

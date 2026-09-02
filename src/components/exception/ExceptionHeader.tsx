@@ -17,7 +17,7 @@ export function ExceptionHeader({ detail }: { detail: ExceptionDetail }) {
       <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-navy-400">{detail.id}</p>
-          <h1 className="mt-1 text-2xl font-semibold text-navy-900">{detail.title}</h1>
+          <h1 className="mt-1 text-xl font-semibold text-navy-900 sm:text-2xl">{detail.title}</h1>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <SeverityBadge severity={detail.severity} />
@@ -42,7 +42,7 @@ function Meta({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <dt className="text-[11px] uppercase tracking-wide text-navy-400">{label}</dt>
-      <dd className="mt-1 text-sm font-medium text-navy-800">{value}</dd>
+      <dd className="mt-1 break-all text-sm font-medium text-navy-800">{value}</dd>
     </div>
   )
 }

@@ -20,7 +20,26 @@ export function Investigations() {
         <TableSkeleton rows={8} />
       ) : (
         <Card padding={false}>
-          <div className="overflow-x-auto">
+          <div className="divide-y divide-navy-50 md:hidden">
+            {result.data.map((row) => (
+              <div key={row.id} className="space-y-2 px-4 py-3">
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-sm font-medium text-navy-900">{row.title}</p>
+                  <StatusBadge status={row.status} />
+                </div>
+                <p className="text-xs text-navy-500">{row.id}</p>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-navy-600">
+                  <Link className="font-medium text-accent hover:underline" to={`/exceptions/${row.exceptionId}`}>
+                    {row.exceptionId}
+                  </Link>
+                  <span>{row.durationSeconds}s</span>
+                  <span>{row.systemsTouched} systems</span>
+                  <span className="text-ai">{row.confidence}%</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="hidden overflow-x-auto md:block">
             <table className="min-w-[900px] w-full text-left text-sm">
               <thead className="border-b border-navy-100 bg-navy-50 text-[11px] uppercase tracking-wide text-navy-500">
                 <tr>

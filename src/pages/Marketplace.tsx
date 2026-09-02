@@ -92,7 +92,7 @@ export function Marketplace() {
         Connector onboarding is simulated. Credentials are fake and no production systems are contacted.
       </DemoBanner>
 
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_280px]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_240px] xl:grid-cols-[minmax(0,1fr)_280px]">
         <div className="space-y-4">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-navy-400" />
@@ -100,7 +100,7 @@ export function Marketplace() {
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Search connectors, vendors, entities or capabilities"
-              className="w-full rounded-lg border border-navy-200 bg-white py-2 pl-9 pr-3 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-blue-100"
+              className="w-full rounded-lg border border-navy-200 bg-white py-2 pl-9 pr-3 text-base outline-none focus:border-accent focus:ring-2 focus:ring-blue-100 md:text-sm"
             />
           </div>
 

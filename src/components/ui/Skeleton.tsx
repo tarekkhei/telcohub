@@ -5,7 +5,7 @@ export function Skeleton({ className = '' }: { className?: string }) {
 export function PageSkeleton() {
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {Array.from({ length: 8 }).map((_, index) => (
           <Skeleton key={index} className="h-28" />
         ))}

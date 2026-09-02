@@ -35,16 +35,16 @@ export function RecommendedAction({
         <p className="rounded-lg bg-warning-soft px-3 py-1.5 text-warning">{eligibility}</p>
       </div>
       <div className="mt-5 flex flex-wrap gap-2">
-        <Button variant="ai" onClick={onApprove} disabled={disabled}>
+        <Button variant="ai" className="w-full sm:w-auto" onClick={onApprove} disabled={disabled}>
           Approve & Execute
         </Button>
-        <Button variant="secondary" onClick={onAssign}>
+        <Button variant="secondary" className="w-full sm:w-auto" onClick={onAssign}>
           Assign to Engineer
         </Button>
-        <Button variant="secondary" onClick={onIncident}>
+        <Button variant="secondary" className="w-full sm:w-auto" onClick={onIncident}>
           Create Incident
         </Button>
-        <Button variant="ghost" onClick={onDismiss}>
+        <Button variant="ghost" className="w-full sm:w-auto" onClick={onDismiss}>
           Dismiss Recommendation
         </Button>
       </div>

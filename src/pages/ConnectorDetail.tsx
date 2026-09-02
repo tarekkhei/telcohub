@@ -52,7 +52,7 @@ export function ConnectorDetail() {
           </div>
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-wide text-navy-400">{connector.category}</p>
-            <h1 className="text-2xl font-semibold text-navy-900">{connector.name}</h1>
+            <h1 className="text-xl font-semibold text-navy-900 sm:text-2xl">{connector.name}</h1>
             <p className="mt-1 text-sm text-navy-500">{connector.overview}</p>
           </div>
         </div>
@@ -125,7 +125,7 @@ export function ConnectorDetail() {
           />
         <div className="space-y-2">
           {connector.actions.map((action) => (
-            <div key={action.name} className="flex items-center justify-between rounded-lg border border-navy-100 px-3 py-2">
+            <div key={action.name} className="flex flex-col gap-2 rounded-lg border border-navy-100 px-3 py-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-medium text-navy-900">{action.name}</p>
                 {action.description ? <p className="text-xs text-navy-500">{action.description}</p> : null}

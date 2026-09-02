@@ -24,7 +24,7 @@ export function AIInsights() {
         title="AI Insights"
         subtitle="Don't add another dashboard. Add an AI operations engineer that notices systemic problems."
       />
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {result.data.map((card) => (
           <Card key={card.id} className={accents[card.type]}>
             <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-navy-400">{card.title}</p>

@@ -39,6 +39,15 @@ export function AgentPanel() {
   const endRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (!open) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [open])
+
+  useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, processLabel, typing])
 
@@ -63,7 +72,7 @@ export function AgentPanel() {
   }
 
   return (
-    <aside className="fixed inset-y-0 right-0 z-40 flex w-full max-w-[420px] flex-col border-l border-navy-200 bg-navy-50 shadow-[-16px_0_40px_rgba(15,28,46,0.08)]">
+    <aside className="fixed inset-0 z-50 flex w-full flex-col border-navy-200 bg-navy-50 shadow-[-16px_0_40px_rgba(15,28,46,0.08)] md:inset-y-0 md:right-0 md:left-auto md:max-w-[420px] md:border-l">
       <header className="border-b border-navy-100 bg-white px-4 py-3">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-2">
@@ -193,7 +202,7 @@ export function AgentPanel() {
             }}
             rows={2}
             placeholder="Ask TelcoHub about this exception, customer, service or operational trend..."
-            className="max-h-28 flex-1 resize-none bg-transparent text-sm text-navy-800 outline-none placeholder:text-navy-400"
+            className="max-h-28 flex-1 resize-none bg-transparent text-base text-navy-800 outline-none placeholder:text-navy-400 md:text-sm"
           />
           <button
             type="submit"
