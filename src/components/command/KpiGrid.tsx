@@ -1,110 +1,97 @@
-import { Clock, ShieldCheck, Timer, Users, WandSparkles, CircleAlert, Hourglass, BadgeCheck } from 'lucide-react'
 import type { KpiSnapshot } from '../../types'
 import { Card } from '../ui/Card'
-import { Sparkline } from '../ui/Sparkline'
 
 function KpiCard({
   label,
   value,
   hint,
-  icon: Icon,
-  spark,
-  sparkColor,
+  tone,
+  supporting,
 }: {
   label: string
   value: string
   hint: string
-  icon: typeof Clock
-  spark?: number[]
-  sparkColor?: string
+  tone?: 'danger' | 'warning' | 'success' | 'neutral' | 'ai'
+  supporting?: string
 }) {
+  const dot =
+    tone === 'danger'
+      ? 'bg-danger'
+      : tone === 'warning'
+        ? 'bg-warning'
+        : tone === 'success'
+          ? 'bg-success'
+          : tone === 'ai'
+            ? 'bg-ai'
+            : 'bg-navy-300'
+
   return (
     <Card className="min-w-0">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-xs font-medium text-navy-500">{label}</p>
-          <p className="mt-1.5 text-2xl font-semibold tracking-tight text-navy-900">{value}</p>
-        </div>
-        <div className="rounded-lg bg-navy-50 p-2 text-navy-500">
-          <Icon className="h-4 w-4" />
-        </div>
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-xs font-medium text-navy-500">{label}</p>
+        <span className={`h-1.5 w-1.5 rounded-full ${dot}`} />
       </div>
-      <div className="mt-3 flex items-end justify-between gap-2">
-        <p className="min-w-0 text-xs text-navy-500">{hint}</p>
-        {spark ? (
-          <div className="hidden shrink-0 sm:block">
-            <Sparkline values={spark} color={sparkColor} />
-          </div>
-        ) : null}
-      </div>
+      <p className="mt-2 text-2xl font-semibold tracking-tight text-navy-900">{value}</p>
+      <p className="mt-1.5 text-xs text-navy-500">{hint}</p>
+      {supporting ? <p className="mt-1 text-[11px] text-navy-400">{supporting}</p> : null}
     </Card>
   )
 }
 
-export function KpiGrid({
-  kpi,
-  sparklines,
-}: {
-  kpi: KpiSnapshot
-  sparklines: { exceptions: number[]; diagnosed: number[]; resolved: number[]; hours: number[] }
-}) {
+function formatRevenue(value: number) {
+  if (value >= 1000) return `$${(value / 1000).toFixed(1)}K`
+  return `$${value.toLocaleString()}`
+}
+
+export function KpiGrid({ kpi }: { kpi: KpiSnapshot }) {
+  const offPath = Math.max(0, +(100 - kpi.happyPathRate).toFixed(1))
+
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      <KpiCard
-        label="Exceptions Today"
-        value={String(kpi.exceptionsToday)}
-        hint={`+${kpi.exceptionsChange}% vs yesterday`}
-        icon={CircleAlert}
-        spark={sparklines.exceptions}
-      />
-      <KpiCard
-        label="AI Diagnosed"
-        value={String(kpi.aiDiagnosed)}
-        hint={`${kpi.aiDiagnosedRate}% of exceptions`}
-        icon={WandSparkles}
-        spark={sparklines.diagnosed}
-        sparkColor="#5b5ce0"
-      />
-      <KpiCard
-        label="Auto Resolved"
-        value={String(kpi.autoResolved)}
-        hint={`${kpi.autoResolvedRate}% automatically closed`}
-        icon={BadgeCheck}
-        spark={sparklines.resolved}
-        sparkColor="#15803d"
-      />
-      <KpiCard
-        label="Awaiting Approval"
-        value={String(kpi.awaitingApproval)}
-        hint="Human-in-the-loop actions"
-        icon={Hourglass}
-      />
-      <KpiCard
-        label="Engineering Escalations"
-        value={String(kpi.engineeringEscalations)}
-        hint={`${kpi.escalationsChange}% vs baseline`}
-        icon={ShieldCheck}
-      />
-      <KpiCard
-        label="Mean Time to Diagnose"
-        value={`${kpi.mttdSeconds} sec`}
-        hint={`Baseline: ${kpi.mttdBaselineMinutes} min`}
-        icon={Timer}
-      />
-      <KpiCard
-        label="Estimated Operations Hours Saved"
-        value={`${kpi.hoursSaved} h`}
-        hint="Illustrative today"
-        icon={Clock}
-        spark={sparklines.hours}
-        sparkColor="#0f766e"
-      />
-      <KpiCard
-        label="Customers Potentially Impacted"
-        value={String(kpi.customersImpacted)}
-        hint="Across open and recovered work"
-        icon={Users}
-      />
+    <div className="space-y-3">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-6">
+        <KpiCard
+          label="Happy Path Rate"
+          value={`${kpi.happyPathRate}%`}
+          hint={`+${kpi.happyPathChange}% vs previous period`}
+          supporting={`On path ${kpi.happyPathRate}% · Off path ${offPath}%`}
+          tone="success"
+        />
+        <KpiCard
+          label="Active Exceptions"
+          value={String(kpi.exceptionsToday)}
+          hint={`+${kpi.exceptionsChange}% vs yesterday`}
+        />
+        <KpiCard
+          label="Critical Exceptions"
+          value={String(kpi.criticalExceptions)}
+          hint="Needs immediate attention"
+          tone="danger"
+        />
+        <KpiCard
+          label="Customers Impacted"
+          value={String(kpi.customersImpacted)}
+          hint="Across open exceptions"
+          tone="warning"
+        />
+        <KpiCard
+          label="Revenue at Risk"
+          value={formatRevenue(kpi.mrrAtRisk)}
+          hint="Estimated MRR exposure"
+          tone="warning"
+        />
+        <KpiCard
+          label="Resolved Today"
+          value={String(kpi.resolvedToday)}
+          hint={`${kpi.autoResolvedRate}% auto-assisted`}
+          tone="success"
+        />
+      </div>
+      {kpi.awaitingApproval > 0 ? (
+        <p className="text-xs text-navy-500">
+          <span className="font-semibold text-warning">{kpi.awaitingApproval} awaiting approval</span>
+          {' — '}governed remediations need operator review
+        </p>
+      ) : null}
     </div>
   )
 }

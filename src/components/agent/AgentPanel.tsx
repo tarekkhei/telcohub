@@ -80,7 +80,7 @@ export function AgentPanel() {
               <Sparkles className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-navy-900">TelcoHub Agent</p>
+              <p className="text-sm font-semibold text-navy-900">TERA AI</p>
               <p className="text-[11px] text-emerald-600">Online • Operational Context Loaded</p>
             </div>
           </div>
@@ -148,7 +148,7 @@ export function AgentPanel() {
       <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
         {messages.length === 0 ? (
           <div className="rounded-xl border border-dashed border-navy-200 bg-white px-3 py-4 text-sm text-navy-600">
-            The dashboard shows what is happening. Ask TelcoHub why it is happening and what should happen next.
+            The dashboard shows what is happening. Ask TERA why it is happening and what should happen next.
             {pageContext.exceptionId ? (
               <p className="mt-2 text-xs text-navy-500">
                 Context loaded: {pageContext.exceptionId} · {pageContext.customerId} · {pageContext.problem} · {pageContext.status} · {pageContext.confidence}% confidence
@@ -201,7 +201,7 @@ export function AgentPanel() {
               }
             }}
             rows={2}
-            placeholder="Ask TelcoHub about this exception, customer, service or operational trend..."
+            placeholder="Ask TERA about this exception, region or resolution..."
             className="max-h-28 flex-1 resize-none bg-transparent text-base text-navy-800 outline-none placeholder:text-navy-400 md:text-sm"
           />
           <button

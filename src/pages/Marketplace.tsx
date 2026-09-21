@@ -78,19 +78,26 @@ export function Marketplace() {
   return (
     <div className="space-y-5">
       <PageHeader
-        eyebrow="Systems / Integrations"
-        title="Connector Marketplace"
-        subtitle="Connect the systems Coreveo uses to investigate, correlate and resolve operational exceptions."
+        title="Unified Operational Context"
+        subtitle="Connect TERA to the systems and operational evidence you already have."
         actions={
           <Button onClick={() => openWizard('rest-api')}>
             <Plus className="h-4 w-4" />
-            Add Custom API
+            Connect System
           </Button>
         }
       />
       <DemoBanner>
-        Connector onboarding is simulated. Credentials are fake and no production systems are contacted.
+        No rip-and-replace. TERA creates intelligence across your existing stack. Connections in this demo are simulated.
       </DemoBanner>
+
+      <div className="flex flex-wrap gap-1.5">
+        {['SYSTEM', 'TELEMETRY', 'EVENT STREAM', 'DATABASE', 'ITSM', 'CHANGE / DEPLOYMENT', 'OBSERVABILITY'].map((kind) => (
+          <span key={kind} className="rounded-full bg-navy-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-navy-500">
+            {kind}
+          </span>
+        ))}
+      </div>
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_240px] xl:grid-cols-[minmax(0,1fr)_280px]">
         <div className="space-y-4">

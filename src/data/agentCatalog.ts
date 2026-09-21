@@ -12,13 +12,11 @@ export const DEFAULT_SOURCES = [
 
 export const SUGGESTIONS: Record<AgentPage, string[]> = {
   'command-center': [
+    'Why is Ontario critical?',
     'What should I look at first?',
-    'What is the biggest problem today?',
-    'Which exceptions are affecting the most customers?',
+    'What needs attention now?',
     'What changed in the last 6 hours?',
-    'Which root cause is increasing?',
-    'Where are we losing the most operational time?',
-    'Which issues could be automated safely?',
+    'Where are we losing revenue?',
     "Summarize today's operations.",
   ],
   exceptions: [
@@ -86,12 +84,36 @@ export const SUGGESTIONS: Record<AgentPage, string[]> = {
     'Which systems were used in the last investigation?',
     'Is Titan HSS healthy?',
   ],
+  'operational-blueprint': [
+    'Show the wireless activation blueprint.',
+    'Which expected states are diverging?',
+  ],
+  'exception-packs': [
+    'What does the Wireless Activation Pack cover?',
+    'Which actions require approval?',
+  ],
+  'resolution-memory': [
+    'Have we seen this HSS pattern before?',
+    'What resolution worked last time?',
+  ],
+  'data-sources': [
+    'Which systems should we connect first?',
+    'What does Salesforce give Coreveo?',
+  ],
+  integrations: [
+    'Which systems are contributing to activation failures?',
+    'How do I connect HSS?',
+  ],
+  resolve: [
+    'Why is approval required?',
+    'What is the recommended resolution?',
+  ],
 }
 
 export const HOMEPAGE_PROMPTS = [
-  'Why are activations failing today?',
+  'Why is Ontario critical?',
   'Show the biggest customer-impacting issue.',
-  'What changed in the last 6 hours?',
+  'What needs attention now?',
   'Find recurring provisioning failures.',
   'Where are we losing revenue?',
   'Summarize operations for management.',

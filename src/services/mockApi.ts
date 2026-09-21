@@ -1,5 +1,5 @@
 import { ALL_EXCEPTIONS } from '../data/generateExceptions'
-import { BLAST_RADIUS_REGIONS, BUSINESS_IMPACT, DEMO_CATEGORY_COUNTS, DEMO_SEVERITY, EXECUTIVE_FUNNEL, EXECUTIVE_KPI, EXECUTIVE_TREND, KPI_SPARKLINES } from '../data/kpis'
+import { BLAST_RADIUS_REGIONS, BUSINESS_IMPACT, COMMAND_CENTER_EXTRAS, DEMO_CATEGORY_COUNTS, DEMO_SEVERITY, EXECUTIVE_FUNNEL, EXECUTIVE_KPI, EXECUTIVE_TREND, KPI_SPARKLINES } from '../data/kpis'
 import { INSIGHTS } from '../data/insights'
 import { INVESTIGATIONS } from '../data/investigations'
 import { KNOWLEDGE_PATTERNS } from '../data/knowledge'
@@ -9,6 +9,12 @@ import { ALL_SERVICES } from '../data/services'
 import { CONNECTED_SYSTEMS } from '../data/systems'
 import { buildExceptionDetail } from '../data/buildDetail'
 import { connectorRuntime } from './connectorRuntime'
+import { regionHealthService } from './regionHealthService'
+import { operationalBlueprintService } from './operationalBlueprintService'
+import { exceptionPackService } from './exceptionPackService'
+import { changeContextService } from './changeContextService'
+import { businessImpactService } from './businessImpactService'
+import { resolutionMemoryService } from './resolutionMemoryService'
 import type { ExceptionDetail, ExceptionRecord, ExceptionStatus, Filters, ServiceRecord } from '../types'
 import type { ConnectorQuery } from '../types/connectors'
 
@@ -48,16 +54,27 @@ export const mockApi = {
     )
   },
 
-  async commandCenter() {
-    await delay(280)
+  async commandCenter(verifiedHeroCount = 0) {
+    await delay(120)
+    const regions = await regionHealthService.list(verifiedHeroCount)
+    const critical = regions.filter((item) => item.status === 'CRITICAL').length
+    const degraded = regions.filter((item) => item.status === 'DEGRADED').length
+    const mrrAtRisk = regions.reduce((sum, item) => sum + item.mrrAtRisk, 0)
     return {
-      kpi: EXECUTIVE_KPI,
+      kpi: {
+        ...EXECUTIVE_KPI,
+        activeCriticalRegions: critical,
+        mrrAtRisk,
+        servicesDegraded: Math.max(EXECUTIVE_KPI.servicesDegraded, critical + degraded),
+      },
       funnel: EXECUTIVE_FUNNEL,
       trend: EXECUTIVE_TREND,
       categories: DEMO_CATEGORY_COUNTS,
       severity: DEMO_SEVERITY,
       impact: BUSINESS_IMPACT,
       sparklines: KPI_SPARKLINES,
+      regions,
+      extras: COMMAND_CENTER_EXTRAS,
     }
   },
 
@@ -99,6 +116,46 @@ export const mockApi = {
   async blastRadius() {
     await delay(180)
     return BLAST_RADIUS_REGIONS
+  },
+
+  async regionHealth(verifiedHeroCount = 0) {
+    return regionHealthService.list(verifiedHeroCount)
+  },
+
+  async getRegion(id: string, verifiedHeroCount = 0) {
+    return regionHealthService.get(id, verifiedHeroCount)
+  },
+
+  async operationalBlueprints() {
+    return operationalBlueprintService.list()
+  },
+
+  async getOperationalBlueprint(id: string) {
+    return operationalBlueprintService.get(id)
+  },
+
+  async exceptionPacks() {
+    return exceptionPackService.list()
+  },
+
+  async getExceptionPack(id: string) {
+    return exceptionPackService.get(id)
+  },
+
+  async changeContext(exceptionId: string) {
+    return changeContextService.forException(exceptionId)
+  },
+
+  async businessImpact(record: ExceptionRecord) {
+    return businessImpactService.forRecord(record)
+  },
+
+  async resolutionMemory() {
+    return resolutionMemoryService.list()
+  },
+
+  async matchResolutionMemory(pattern: string) {
+    return resolutionMemoryService.matchForPattern(pattern)
   },
 
   exceptionTypes() {

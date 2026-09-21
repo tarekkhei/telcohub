@@ -66,16 +66,13 @@ export function AppLayout() {
               >
                 <Menu className="h-5 w-5" />
               </button>
-              <p className="truncate text-sm font-semibold text-navy-900 lg:hidden">TelcoHub</p>
+              <p className="truncate text-sm font-semibold text-navy-900 lg:hidden">Coreveo TERA</p>
               <p className="hidden min-w-0 truncate text-xs text-navy-500 lg:block">
                 Your systems automate the happy path.{' '}
-                <span className="font-medium text-navy-800">TelcoHub AI gets exceptions back on track.</span>
+                <span className="font-medium text-navy-800">TERA handles the exceptions.</span>
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-3">
-              <p className="hidden text-[11px] text-navy-400 xl:block">
-                Synthetic demo data · Ice Wireless / Telehop / Iristel / MVNO Alpha
-              </p>
               <button
                 type="button"
                 onClick={() => {
@@ -85,7 +82,7 @@ export function AppLayout() {
                 className="hidden items-center gap-1.5 rounded-full bg-ai-soft px-3 py-1.5 text-xs font-semibold text-ai hover:bg-indigo-100 sm:inline-flex"
               >
                 <Sparkles className="h-3.5 w-3.5" />
-                Ask TelcoHub
+                Ask TERA
               </button>
             </div>
           </div>

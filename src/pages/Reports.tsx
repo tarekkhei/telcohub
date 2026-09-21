@@ -17,15 +17,23 @@ export function Reports() {
   return (
     <div className="space-y-5">
       <PageHeader
-        eyebrow="Executive reporting"
-        title="Reports"
-        subtitle="Operational visibility around the agent's resolution work — not another KPI wall."
+        title="Operational Intelligence & Learning"
+        subtitle="Discover recurring patterns, systemic issues, business impact and automation opportunities."
       />
-      <DemoBanner>All report figures are synthetic and intended for product demonstration only.</DemoBanner>
+      <DemoBanner>TERA learns from operations. Figures below are synthetic for product demonstration.</DemoBanner>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+        <InsightTile label="Happy Path Rate" value="97.4%" hint="↑ 0.8% vs previous period" />
+        <InsightTile label="Top Recurring Pattern" value="HSS Subscriber Creation" hint="128 occurrences" />
+        <InsightTile label="Biggest Business Impact" value="$48.7K" hint="Wireless Activation at risk" />
+        <InsightTile label="Resolution Performance" value="84%" hint="Recommendations successful" />
+        <InsightTile label="Automation Opportunity" value="Provisioning Retry" hint="94% historical · Low risk" />
+      </div>
+
       <FilterBar filters={filters} onChange={setFilters} />
 
       <section>
-        <h2 className="mb-3 text-sm font-semibold text-navy-900">Operations performance</h2>
+        <h2 className="mb-3 text-sm font-semibold text-navy-900">Exception trends & resolution</h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Metric label="Total exceptions" value={String(metrics.totalExceptions)} />
           <Metric label="AI diagnosis rate" value={`${metrics.aiDiagnosisRate}%`} />
@@ -49,7 +57,7 @@ export function Reports() {
       </section>
 
       <section>
-        <h2 className="mb-3 text-sm font-semibold text-navy-900">Trend report</h2>
+        <h2 className="mb-3 text-sm font-semibold text-navy-900">Learning trends</h2>
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           <MiniLine title="MTTR over time" data={trends.mttr} dataKey="minutes" />
           <MiniLine title="AI diagnosis rate" data={trends.diagnosisRate} dataKey="rate" />
@@ -59,10 +67,10 @@ export function Reports() {
       </section>
 
       <Card>
-        <CardTitle title="AI vs manual comparison" subtitle="Demo / illustrative metrics" />
+        <CardTitle title="Before / after TERA" subtitle="Demo / illustrative metrics" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="rounded-xl bg-navy-50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-navy-400">Before Coreveo AI</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-navy-400">Before TERA</p>
             <ul className="mt-3 space-y-2 text-sm text-navy-700">
               {comparison.map((row) => (
                 <li key={row.label} className="flex justify-between">
@@ -73,7 +81,7 @@ export function Reports() {
             </ul>
           </div>
           <div className="rounded-xl bg-ai-soft p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-ai">After Coreveo AI</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-ai">After TERA</p>
             <ul className="mt-3 space-y-2 text-sm text-navy-800">
               {comparison.map((row) => (
                 <li key={row.label} className="flex justify-between">
@@ -85,10 +93,21 @@ export function Reports() {
           </div>
         </div>
         <p className="mt-4 text-sm text-navy-700">
-          Estimated monthly savings: <span className="text-lg font-semibold text-navy-900">{hoursSaved} operations hours</span>
+          Estimated monthly savings:{' '}
+          <span className="text-lg font-semibold text-navy-900">{hoursSaved} operations hours</span>
         </p>
       </Card>
     </div>
+  )
+}
+
+function InsightTile({ label, value, hint }: { label: string; value: string; hint: string }) {
+  return (
+    <Card className="p-4">
+      <p className="text-[11px] font-semibold uppercase tracking-wide text-navy-400">{label}</p>
+      <p className="mt-2 text-lg font-semibold text-navy-900">{value}</p>
+      <p className="mt-1 text-xs text-navy-500">{hint}</p>
+    </Card>
   )
 }
 

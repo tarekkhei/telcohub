@@ -22,7 +22,7 @@ const statusClass: Record<ExceptionStatus, string> = {
 
 export function SeverityBadge({ severity }: { severity: Severity }) {
   return (
-    <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold capitalize ${severityClass[severity]}`}>
+    <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold uppercase ${severityClass[severity]}`}>
       {severity}
     </span>
   )

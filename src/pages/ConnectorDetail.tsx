@@ -27,9 +27,9 @@ export function ConnectorDetail() {
   if (!result.data) {
     return (
       <div className="space-y-4">
-        <Link to="/marketplace" className="inline-flex items-center gap-1 text-sm text-navy-500 hover:text-navy-800">
+        <Link to="/connected-systems" className="inline-flex items-center gap-1 text-sm text-navy-500 hover:text-navy-800">
           <ArrowLeft className="h-4 w-4" />
-          Connector Marketplace
+          Back to Connected Systems
         </Link>
         <p className="text-sm text-navy-600">That connector is not in the demo catalog.</p>
       </div>
@@ -40,9 +40,9 @@ export function ConnectorDetail() {
 
   return (
     <div className="space-y-5">
-      <Link to="/marketplace" className="inline-flex items-center gap-1 text-sm text-navy-500 hover:text-navy-800">
+      <Link to="/connected-systems" className="inline-flex items-center gap-1 text-sm text-navy-500 hover:text-navy-800">
         <ArrowLeft className="h-4 w-4" />
-        Connector Marketplace
+        Back to Connected Systems
       </Link>
 
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -64,7 +64,7 @@ export function ConnectorDetail() {
         </div>
       </div>
 
-      <DemoBanner>This connector pack is synthetic metadata for the Coreveo demo. No live vendor session is established.</DemoBanner>
+      <DemoBanner>This connector pack is synthetic metadata for the TERA demo. No live vendor session is established.</DemoBanner>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
         <Card className="xl:col-span-2">
@@ -102,7 +102,7 @@ export function ConnectorDetail() {
               <li key={item}>{item}</li>
             ))}
           </ul>
-          <h3 className="mt-5 text-xs font-semibold uppercase tracking-wide text-navy-400">Coreveo AI support</h3>
+          <h3 className="mt-5 text-xs font-semibold uppercase tracking-wide text-navy-400">TERA AI support</h3>
           <ul className="mt-2 space-y-1 text-sm text-navy-700">
             <li>Investigation {ai.investigation ? '✓' : '—'}</li>
             <li>Cross-system correlation {ai.correlation ? '✓' : '—'}</li>
@@ -136,15 +136,15 @@ export function ConnectorDetail() {
         </div>
         {connector.databaseReadOnlyNote ? (
           <p className="mt-4 text-sm text-navy-600">
-            Coreveo recommends read-only database access for operational investigation.
+            TERA recommends read-only database access for operational investigation.
           </p>
         ) : null}
       </Card>
 
       <Card>
         <CardTitle
-          title="AI semantic discovery"
-          subtitle="After importing an API contract, Coreveo interprets operational meaning — entity, lifecycle, risk and execution policy."
+          title="TERA discovery"
+          subtitle="After connecting, TERA interprets operational meaning — entity, lifecycle, risk and execution policy."
         />
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {(discoveries.data ?? []).map((item) => (

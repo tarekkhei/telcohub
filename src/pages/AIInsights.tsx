@@ -22,7 +22,7 @@ export function AIInsights() {
       <PageHeader
         eyebrow="Proactive agent"
         title="AI Insights"
-        subtitle="Don't add another dashboard. Add an AI operations engineer that notices systemic problems."
+        subtitle="Don't add another dashboard. Add an AI operations engineer that notices systemic exception patterns across the stack you already have."
       />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {result.data.map((card) => (

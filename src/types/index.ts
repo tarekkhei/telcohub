@@ -26,7 +26,7 @@ export type ExceptionCategory =
   | 'API / Integration Failure'
   | 'Other'
 
-export type JourneyStepStatus = 'completed' | 'failed' | 'not_started'
+export type JourneyStepStatus = 'completed' | 'failed' | 'not_started' | 'delayed'
 
 export type SystemFindingStatus = 'ok' | 'failed'
 
@@ -101,6 +101,13 @@ export interface Diagnosis {
   revenueBlocked: number
 }
 
+export interface StateComparisonRow {
+  label: string
+  expected: string
+  observed: string
+  aligned: boolean
+}
+
 export interface ExceptionDetail extends ExceptionRecord {
   journey: JourneyStep[]
   systems: SystemInvestigation[]
@@ -113,6 +120,9 @@ export interface ExceptionDetail extends ExceptionRecord {
   beforeState: Record<string, string>
   afterState: Record<string, string>
   investigationSeconds: number
+  stateComparison?: StateComparisonRow[]
+  stateDivergence?: string
+  governedActions?: { name: string; governance: string; riskLevel: string; requiresApproval: boolean }[]
 }
 
 export interface ServiceRecord {
@@ -172,6 +182,10 @@ export interface RootCauseStat {
 export interface KpiSnapshot {
   exceptionsToday: number
   exceptionsChange: number
+  criticalExceptions: number
+  resolvedToday: number
+  happyPathRate: number
+  happyPathChange: number
   aiDiagnosed: number
   aiDiagnosedRate: number
   autoResolved: number
@@ -183,6 +197,10 @@ export interface KpiSnapshot {
   mttdBaselineMinutes: number
   hoursSaved: number
   customersImpacted: number
+  activeCriticalRegions: number
+  mrrAtRisk: number
+  servicesDegraded: number
+  exceptionsLinkedToChanges: number
 }
 
 export interface FunnelStage {
@@ -257,8 +275,14 @@ export type AgentPage =
   | 'insights'
   | 'knowledge'
   | 'settings'
+  | 'resolve'
+  | 'integrations'
   | 'marketplace'
   | 'connector-detail'
+  | 'operational-blueprint'
+  | 'exception-packs'
+  | 'resolution-memory'
+  | 'data-sources'
 
 export type ActionRisk = 'read_only' | 'safe' | 'approval' | 'restricted'
 

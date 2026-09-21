@@ -1,14 +1,15 @@
 interface SelectProps {
-  label: string
+  label?: string
   value: string
   onChange: (value: string) => void
   options: { value: string; label: string }[]
+  className?: string
 }
 
-export function Select({ label, value, onChange, options }: SelectProps) {
+export function Select({ label, value, onChange, options, className }: SelectProps) {
   return (
-    <label className="flex min-w-0 flex-col gap-1">
-      <span className="text-[11px] font-medium uppercase tracking-wide text-navy-500">{label}</span>
+    <label className={`flex min-w-0 flex-col gap-1 ${className ?? ''}`}>
+      {label ? <span className="text-[11px] font-medium uppercase tracking-wide text-navy-500">{label}</span> : null}
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}

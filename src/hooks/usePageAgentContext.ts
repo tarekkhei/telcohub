@@ -8,14 +8,31 @@ function pageFromPath(pathname: string): AgentPage {
   if (pathname === '/') return 'command-center'
   if (pathname.startsWith('/exceptions/')) return 'exception-detail'
   if (pathname.startsWith('/exceptions')) return 'exceptions'
-  if (pathname.startsWith('/investigations')) return 'investigations'
+  if (pathname.startsWith('/investigate') || pathname.startsWith('/investigations')) return 'investigations'
+  if (pathname.startsWith('/resolve')) return 'resolve'
+  if (
+    pathname.startsWith('/connected-systems/') ||
+    pathname.startsWith('/integrations/') ||
+    pathname.startsWith('/marketplace/')
+  ) {
+    return 'connector-detail'
+  }
+  if (
+    pathname.startsWith('/connected-systems') ||
+    pathname.startsWith('/integrations') ||
+    pathname.startsWith('/marketplace') ||
+    pathname.startsWith('/data-sources')
+  ) {
+    return 'integrations'
+  }
+  if (pathname.startsWith('/insights') || pathname.startsWith('/reports')) return 'reports'
+  if (pathname.startsWith('/ai-insights')) return 'insights'
   if (pathname.startsWith('/services')) return 'services'
+  if (pathname.startsWith('/operational-blueprint')) return 'operational-blueprint'
+  if (pathname.startsWith('/exception-packs')) return 'exception-packs'
+  if (pathname.startsWith('/resolution-memory')) return 'resolution-memory'
   if (pathname.startsWith('/root-causes')) return 'root-causes'
-  if (pathname.startsWith('/reports')) return 'reports'
-  if (pathname.startsWith('/insights')) return 'insights'
   if (pathname.startsWith('/knowledge')) return 'knowledge'
-  if (pathname.startsWith('/marketplace/')) return 'connector-detail'
-  if (pathname.startsWith('/marketplace')) return 'marketplace'
   if (pathname.startsWith('/settings')) return 'settings'
   return 'command-center'
 }
@@ -33,9 +50,7 @@ export function usePageAgentContext(): PageAgentContext {
 
     if (page === 'exception-detail' && record) {
       const diagnosis =
-        record.id === HERO_EXCEPTION_ID
-          ? 'Incorrect or unavailable HSS provisioning endpoint.'
-          : record.rootCause
+        record.id === HERO_EXCEPTION_ID ? 'HSS endpoint configuration.' : record.rootCause
       return {
         page,
         exceptionId: record.id,
@@ -50,7 +65,7 @@ export function usePageAgentContext(): PageAgentContext {
           record.id,
           `Customer ${record.customerId}`,
           record.title,
-          `${CONNECTED_SYSTEM_COUNT} Systems Connected`,
+          `${CONNECTED_SYSTEM_COUNT} Connected Systems`,
         ],
       }
     }
@@ -60,16 +75,16 @@ export function usePageAgentContext(): PageAgentContext {
       exceptionId: hero?.id,
       customerId: hero?.customerId,
       serviceLabel: 'Mobile',
-      problem: 'Provisioning API HTTP 404',
+      problem: 'Wireless Activation Failure',
       status: 'Awaiting Approval',
-      diagnosis: 'Incorrect or unavailable HSS provisioning endpoint.',
-      confidence: 94,
+      diagnosis: 'HSS endpoint configuration.',
+      confidence: 96,
       relatedCount: 37,
       chips: [
-        page === 'command-center' ? 'Command Center' : page.replace('-', ' '),
+        page === 'command-center' ? 'Command Center' : page.replace(/-/g, ' '),
+        'Ontario CRITICAL',
         'EXC-2026-0146',
-        '38 related activations',
-        `${CONNECTED_SYSTEM_COUNT} Systems Connected`,
+        `${CONNECTED_SYSTEM_COUNT} Connected Systems`,
       ],
     }
   }, [exceptions, location.pathname, params.id])

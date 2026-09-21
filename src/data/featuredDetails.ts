@@ -51,9 +51,12 @@ export function getHeroDetailOverlay(): Pick<
   | 'sim'
   | 'orderId'
   | 'detectedAt'
+  | 'stateComparison'
+  | 'stateDivergence'
+  | 'governedActions'
 > {
   return {
-    title: 'Mobile Activation Failed',
+    title: 'Wireless Activation Failed',
     msisdn: '+1 438-555-0187',
     sim: '8930230000008817461',
     orderId: 'ORD-20260829-14782',
@@ -62,11 +65,11 @@ export function getHeroDetailOverlay(): Pick<
     journey: [
       { name: 'Order', status: 'completed', timestamp: '14:20:51', detail: 'Completed' },
       { name: 'Payment', status: 'completed', timestamp: '14:20:54', detail: 'Approved' },
-      { name: 'Billing Account', status: 'completed', timestamp: '14:20:57', detail: 'Created' },
-      { name: 'SIM Assignment', status: 'completed', timestamp: '14:20:59', detail: 'Assigned' },
-      { name: 'Provisioning API', status: 'failed', timestamp: '14:21:03', detail: 'Failed' },
-      { name: 'HSS Subscriber', status: 'failed', detail: 'Not Created' },
-      { name: 'Network Activation', status: 'not_started', detail: 'Not Started' },
+      { name: 'Billing', status: 'completed', timestamp: '14:20:57', detail: 'Active' },
+      { name: 'SIM', status: 'completed', timestamp: '14:20:59', detail: 'Assigned' },
+      { name: 'Provisioning', status: 'failed', timestamp: '14:21:03', detail: 'Failed' },
+      { name: 'HSS', status: 'failed', detail: 'Not Found' },
+      { name: 'Network', status: 'not_started', detail: 'Not reached' },
     ],
     systems: [
       { name: 'Ordering API', status: 'ok', finding: 'Data retrieved' },
@@ -92,32 +95,28 @@ export function getHeroDetailOverlay(): Pick<
       { timestamp: '14:21:43', description: 'Root cause hypothesis generated.' },
     ],
     diagnosis: {
-      rootCause:
-        'Incorrect or unavailable provisioning endpoint during HSS subscriber creation',
-      confidence: 94,
+      rootCause: 'HSS endpoint configuration issue',
+      confidence: 96,
       evidence: [
-        'Provisioning API returned HTTP 404.',
-        'Billing and SIM states are valid.',
-        'HSS subscriber does not exist.',
-        '37 similar failures occurred in the previous 6 hours.',
-        '94% of affected transactions used provisioning endpoint: /api/v1/hss/subscriber/create',
-        'Successful transactions used: /api/v2/hss/subscribers',
+        'HSS API returned HTTP 404',
+        'HSS service itself is reachable',
+        '38 transactions show the same pattern',
+        'Failures started after a provisioning change',
+        'Previous successful activations used another endpoint',
       ],
       blastRadius: 38,
-      revenueBlocked: 2660,
+      revenueBlocked: 18450,
     },
     similarIncidents: FEATURED_SIMILAR_INCIDENTS,
     recommendedActions: [
-      'Validate current HSS provisioning endpoint configuration.',
-      'Switch traffic to the known valid endpoint.',
-      'Retry failed CREATE_SUBSCRIBER operation.',
-      'Verify HSS subscriber exists.',
-      'Confirm network activation.',
-      'Verify billing/network states are aligned.',
-      'Retry remaining affected transactions.',
+      'Validate HSS endpoint configuration',
+      'Run controlled retry against one subscriber',
+      'Verify HSS subscriber',
+      'Verify network activation',
+      'Retry remaining eligible transactions',
     ],
     risk: 'low',
-    automationEligibility: 'Human approval required',
+    automationEligibility: 'APPROVAL REQUIRED',
     beforeState: {
       Billing: 'Active',
       SIM: 'Assigned',
@@ -130,5 +129,19 @@ export function getHeroDetailOverlay(): Pick<
       HSS: 'Active',
       Network: 'Active',
     },
+    stateComparison: [
+      { label: 'Billing', expected: 'ACTIVE', observed: 'ACTIVE', aligned: true },
+      { label: 'SIM', expected: 'ASSIGNED', observed: 'ASSIGNED', aligned: true },
+      { label: 'HSS', expected: 'PROVISIONED', observed: 'NOT FOUND', aligned: false },
+      { label: 'Network', expected: 'ACTIVE', observed: 'NOT ACTIVE', aligned: false },
+    ],
+    stateDivergence:
+      'HSS subscriber is missing after all required upstream activation steps completed.',
+    governedActions: [
+      { name: 'GET subscriber', governance: 'READ ONLY', riskLevel: 'low', requiresApproval: false },
+      { name: 'Retry provisioning', governance: 'APPROVAL REQUIRED', riskLevel: 'medium', requiresApproval: true },
+      { name: 'Bulk retry', governance: 'APPROVAL REQUIRED', riskLevel: 'high', requiresApproval: true },
+      { name: 'Delete subscriber', governance: 'RESTRICTED', riskLevel: 'high', requiresApproval: true },
+    ],
   }
 }

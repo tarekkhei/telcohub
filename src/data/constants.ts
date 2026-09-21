@@ -48,11 +48,23 @@ export const TIME_RANGES = [
 ] as const
 
 export const STATUS_LABELS: Record<ExceptionStatus, string> = {
-  new: 'New',
+  new: 'Detected',
   investigating: 'Investigating',
   diagnosed: 'Diagnosed',
   awaiting_approval: 'Awaiting Approval',
-  resolving: 'Resolving',
+  resolving: 'Executing',
+  resolved: 'Resolved',
+  verified: 'Verified',
+  escalated: 'Escalated',
+}
+
+/** Display labels for AI investigation progress on Command Center */
+export const AI_STATUS_LABELS: Record<string, string> = {
+  new: 'Detected',
+  investigating: 'Investigating',
+  diagnosed: 'Diagnosed',
+  awaiting_approval: 'Recommendation Ready',
+  resolving: 'Executing',
   resolved: 'Resolved',
   verified: 'Verified',
   escalated: 'Escalated',

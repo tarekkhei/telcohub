@@ -133,5 +133,17 @@ export function buildExceptionDetail(record: ExceptionRecord): ExceptionDetail {
       Expected: 'Complete',
     },
     investigationSeconds: 22 + (Number(record.id.slice(-2)) % 20),
+    stateComparison: [
+      { label: 'Billing', expected: 'ACTIVE', observed: record.category === 'Billing State Mismatch' ? 'DIVERGED' : 'ACTIVE', aligned: record.category !== 'Billing State Mismatch' },
+      { label: 'Inventory', expected: 'ASSIGNED', observed: 'ASSIGNED', aligned: true },
+      { label: record.system, expected: 'HEALTHY', observed: 'FAILED', aligned: false },
+      { label: 'Expected outcome', expected: 'COMPLETE', observed: 'INCOMPLETE', aligned: false },
+    ],
+    stateDivergence: `${record.exceptionType} after upstream steps completed.`,
+    governedActions: [
+      { name: 'Inspect transaction', governance: 'READ ONLY', riskLevel: 'low', requiresApproval: false },
+      { name: 'Retry failed step', governance: 'APPROVAL REQUIRED', riskLevel: 'medium', requiresApproval: true },
+      { name: 'Create incident', governance: 'SAFE TO AUTOMATE', riskLevel: 'low', requiresApproval: false },
+    ],
   }
 }

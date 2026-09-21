@@ -10,6 +10,10 @@ import type { ExceptionRecord } from '../types'
 export const EXECUTIVE_KPI: KpiSnapshot = {
   exceptionsToday: 147,
   exceptionsChange: 12,
+  criticalExceptions: 9,
+  resolvedToday: 98,
+  happyPathRate: 97.4,
+  happyPathChange: 0.8,
   aiDiagnosed: 121,
   aiDiagnosedRate: 82.3,
   autoResolved: 68,
@@ -21,6 +25,52 @@ export const EXECUTIVE_KPI: KpiSnapshot = {
   mttdBaselineMinutes: 37,
   hoursSaved: 62.4,
   customersImpacted: 284,
+  activeCriticalRegions: 1,
+  mrrAtRisk: 48700,
+  servicesDegraded: 4,
+  exceptionsLinkedToChanges: 38,
+}
+
+export const COMMAND_CENTER_EXTRAS = {
+  topPatterns: [
+    { name: 'HSS Subscriber Missing', count: 38, region: 'Ontario' },
+    { name: 'DID Routing Delay', count: 18, region: 'Quebec' },
+    { name: 'eSIM QR Activation Failed', count: 9, region: 'US West' },
+    { name: 'Port Request Stuck', count: 11, region: 'Ontario' },
+  ],
+  changeLinked: [
+    {
+      id: 'EXC-2026-0146',
+      title: 'Mobile Activation Failed',
+      change: 'Provisioning v2.8 · HSS endpoint',
+      confidence: 96,
+    },
+    {
+      id: 'EXC-2026-0122',
+      title: 'DID Assigned But Not Activated',
+      change: 'Switch route table refresh',
+      confidence: 81,
+    },
+  ],
+  awaitingApprovalPreview: [
+    { id: 'EXC-2026-0146', title: 'HSS Subscriber Creation Failure', impact: '38 activations · $2,660 MRR' },
+    { id: 'EXC-2026-0118', title: 'DID Routing Delay', impact: '12 DIDs · Quebec' },
+    { id: 'EXC-2026-0094', title: 'Port Request Stuck', impact: '4 ports awaiting FOC' },
+  ],
+  recentInvestigations: [
+    {
+      id: 'INV-0146',
+      title: 'Ontario wireless activation cluster',
+      confidence: 96,
+      href: '/exceptions/EXC-2026-0146',
+    },
+    {
+      id: 'INV-0118',
+      title: 'Quebec DID routing lag',
+      confidence: 88,
+      href: '/exceptions',
+    },
+  ],
 }
 
 export const EXECUTIVE_FUNNEL: FunnelStage[] = [

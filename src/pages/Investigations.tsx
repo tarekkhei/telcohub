@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { StatusBadge } from '../components/ui/Badge'
+import { SoftBadge, StatusBadge } from '../components/ui/Badge'
 import { Card } from '../components/ui/Card'
 import { PageHeader } from '../components/ui/PageHeader'
 import { TableSkeleton } from '../components/ui/Skeleton'
@@ -12,70 +12,54 @@ export function Investigations() {
   return (
     <div className="space-y-5">
       <PageHeader
-        eyebrow="Investigation"
-        title="Investigations"
-        subtitle="Coreveo gathers evidence across OSS/BSS systems instead of waiting on a single alert owner."
+        title="AI-Powered Investigation"
+        subtitle="Reconstruct operational journeys, correlate evidence and identify probable root causes across connected systems."
       />
       {result.loading || !result.data ? (
         <TableSkeleton rows={8} />
       ) : (
-        <Card padding={false}>
-          <div className="divide-y divide-navy-50 md:hidden">
-            {result.data.map((row) => (
-              <div key={row.id} className="space-y-2 px-4 py-3">
-                <div className="flex items-start justify-between gap-2">
-                  <p className="text-sm font-medium text-navy-900">{row.title}</p>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {result.data.slice(0, 12).map((row) => (
+            <Link key={row.id} to={`/exceptions/${row.exceptionId}`} className="block">
+              <Card className="h-full transition hover:border-accent/40 hover:shadow-sm">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-semibold text-navy-900">{row.title}</p>
+                    <p className="mt-1 text-xs text-navy-500">{row.durationSeconds < 60 ? `${row.durationSeconds} seconds` : `${Math.round(row.durationSeconds / 60)} minutes`}</p>
+                  </div>
                   <StatusBadge status={row.status} />
                 </div>
-                <p className="text-xs text-navy-500">{row.id}</p>
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-navy-600">
-                  <Link className="font-medium text-accent hover:underline" to={`/exceptions/${row.exceptionId}`}>
-                    {row.exceptionId}
-                  </Link>
-                  <span>{row.durationSeconds}s</span>
-                  <span>{row.systemsTouched} systems</span>
-                  <span className="text-ai">{row.confidence}%</span>
+                <dl className="mt-4 grid grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <dt className="text-[11px] text-navy-400">Systems checked</dt>
+                    <dd className="font-medium text-navy-800">{row.systemsTouched}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[11px] text-navy-400">Evidence</dt>
+                    <dd className="font-medium text-navy-800">{row.systemsTouched * 6 + 11}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[11px] text-navy-400">Hypotheses</dt>
+                    <dd className="font-medium text-navy-800">3</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[11px] text-navy-400">Confidence</dt>
+                    <dd className="font-semibold text-ai">{row.confidence}%</dd>
+                  </div>
+                </dl>
+                <div className="mt-3">
+                  <SoftBadge tone="ai">
+                    {row.status === 'awaiting_approval' || row.status === 'diagnosed'
+                      ? 'Diagnosis Ready'
+                      : row.status === 'investigating'
+                        ? 'Investigating'
+                        : 'Active'}
+                  </SoftBadge>
                 </div>
-              </div>
-            ))}
-          </div>
-          <div className="hidden overflow-x-auto md:block">
-            <table className="min-w-[900px] w-full text-left text-sm">
-              <thead className="border-b border-navy-100 bg-navy-50 text-[11px] uppercase tracking-wide text-navy-500">
-                <tr>
-                  <th className="px-4 py-2.5 font-medium">Investigation</th>
-                  <th className="px-4 py-2.5 font-medium">Exception</th>
-                  <th className="px-4 py-2.5 font-medium">Title</th>
-                  <th className="px-4 py-2.5 font-medium">Started</th>
-                  <th className="px-4 py-2.5 font-medium">Duration</th>
-                  <th className="px-4 py-2.5 font-medium">Systems</th>
-                  <th className="px-4 py-2.5 font-medium">Confidence</th>
-                  <th className="px-4 py-2.5 font-medium">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {result.data.map((row) => (
-                  <tr key={row.id} className="border-b border-navy-50">
-                    <td className="px-4 py-3 font-medium text-navy-900">{row.id}</td>
-                    <td className="px-4 py-3">
-                      <Link className="font-medium text-accent hover:underline" to={`/exceptions/${row.exceptionId}`}>
-                        {row.exceptionId}
-                      </Link>
-                    </td>
-                    <td className="px-4 py-3 text-navy-700">{row.title}</td>
-                    <td className="px-4 py-3 text-navy-600">{row.startedAt.replace('T', ' ').slice(0, 19)}</td>
-                    <td className="px-4 py-3 text-navy-700">{row.durationSeconds}s</td>
-                    <td className="px-4 py-3 text-navy-700">{row.systemsTouched}</td>
-                    <td className="px-4 py-3 text-ai">{row.confidence}%</td>
-                    <td className="px-4 py-3">
-                      <StatusBadge status={row.status} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Card>
+              </Card>
+            </Link>
+          ))}
+        </div>
       )}
     </div>
   )

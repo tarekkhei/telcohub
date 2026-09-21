@@ -49,16 +49,16 @@ export function ConnectedSystemsPanel({
           )
         })}
       </ul>
-      <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-4">
+      <div className="mt-4 grid grid-cols-2 gap-2">
         {LADDER.map((step, index) => (
           <div
             key={step.label}
-            className={`rounded-lg px-2.5 py-2 text-center ${
+            className={`min-w-0 rounded-lg px-3 py-2.5 ${
               index === activeStep ? 'bg-ai-soft text-ai' : 'bg-navy-50 text-navy-500'
             }`}
           >
-            <p className="text-[10px] font-semibold uppercase tracking-wide">{step.range}</p>
-            <p className="text-xs font-semibold">{step.label}</p>
+            <p className="text-[10px] font-semibold uppercase leading-tight tracking-wide">{step.range}</p>
+            <p className="mt-1 break-words text-xs font-semibold leading-snug">{step.label}</p>
           </div>
         ))}
       </div>

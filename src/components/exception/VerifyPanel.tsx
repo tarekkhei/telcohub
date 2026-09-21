@@ -8,42 +8,65 @@ export function VerifyPanel({
   detail: ExceptionDetail
   verified: boolean
 }) {
+  const checks = [
+    { label: 'HSS Subscriber', okValue: 'PROVISIONED', before: detail.beforeState.HSS ?? '—' },
+    { label: 'Network', okValue: 'ACTIVE', before: detail.beforeState.Network ?? '—' },
+    { label: 'Billing', okValue: 'ACTIVE', before: detail.beforeState.Billing ?? '—' },
+    { label: 'SIM', okValue: 'ASSIGNED', before: detail.beforeState.SIM ?? '—' },
+  ]
+
   return (
     <Card>
       <CardTitle
-        title="Verify expected business outcome"
-        subtitle="Resolution is incomplete until Coreveo confirms the customer service is in the intended state."
+        title={verified ? 'Resolution Verification' : 'Verifying…'}
+        subtitle="Authoritative state checks — not HTTP 200 alone."
       />
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <StateCard title="Before" state={detail.beforeState} />
-        <StateCard title="After" state={verified ? detail.afterState : maskedAfter(detail.afterState)} muted={!verified} />
-      </div>
-      <p className={`mt-4 rounded-lg px-3 py-2 text-sm font-semibold ${verified ? 'bg-success-soft text-success' : 'bg-navy-50 text-navy-500'}`}>
-        Final status: {verified ? 'VERIFIED' : 'PENDING VERIFICATION'}
-      </p>
+      <ul className="space-y-2">
+        {checks.map((item) => (
+          <li key={item.label} className="flex items-center justify-between text-sm">
+            <span className="text-navy-700">{item.label}</span>
+            <span className={verified ? 'font-semibold text-success' : 'text-navy-400'}>
+              {verified ? `✓ ${item.okValue}` : '…'}
+            </span>
+          </li>
+        ))}
+      </ul>
+      {verified ? (
+        <div className="mt-4 space-y-2">
+          <p className="rounded-lg bg-success-soft px-3 py-2 text-sm font-semibold text-success">
+            Expected State Restored
+          </p>
+          <p className="rounded-lg border border-emerald-200 bg-white px-3 py-2 text-sm font-semibold text-success">
+            ✓ Back on Happy Path
+          </p>
+        </div>
+      ) : null}
+      <details className="mt-3">
+        <summary className="cursor-pointer text-xs font-medium text-navy-500">State comparison</summary>
+        <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <StateCard title="Before" state={detail.beforeState} />
+          <StateCard
+            title="After"
+            state={verified ? detail.afterState : Object.fromEntries(Object.keys(detail.afterState).map((key) => [key, '—']))}
+            muted={!verified}
+          />
+        </div>
+      </details>
     </Card>
   )
 }
 
-function maskedAfter(state: Record<string, string>) {
-  return Object.fromEntries(Object.keys(state).map((key) => [key, '—']))
-}
-
 function StateCard({ title, state, muted }: { title: string; state: Record<string, string>; muted?: boolean }) {
   return (
-    <div className={`rounded-xl border p-4 ${muted ? 'border-navy-100 bg-navy-50' : 'border-navy-100 bg-white'}`}>
+    <div className={`rounded-xl border p-3 ${muted ? 'border-navy-100 bg-navy-50' : 'border-navy-100 bg-white'}`}>
       <p className="text-xs font-semibold uppercase tracking-wide text-navy-400">{title}</p>
-      <ul className="mt-3 space-y-2">
-        {Object.entries(state).map(([key, value]) => {
-          const bad = ['Missing', 'Inactive', 'Failed', 'Diverged', 'Incomplete'].includes(value)
-          const good = ['Active', 'Assigned', 'Healthy', 'Complete'].includes(value)
-          return (
-            <li key={key} className="flex items-center justify-between text-sm">
-              <span className="text-navy-600">{key}</span>
-              <span className={`font-medium ${bad ? 'text-danger' : good ? 'text-success' : 'text-navy-500'}`}>{value}</span>
-            </li>
-          )
-        })}
+      <ul className="mt-2 space-y-1.5">
+        {Object.entries(state).map(([key, value]) => (
+          <li key={key} className="flex items-center justify-between text-sm">
+            <span className="text-navy-600">{key}</span>
+            <span className="font-medium text-navy-800">{value}</span>
+          </li>
+        ))}
       </ul>
     </div>
   )

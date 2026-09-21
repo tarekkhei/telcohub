@@ -179,53 +179,101 @@ export function generateAgentReply(
 
   if (q.startsWith('/')) return handleSlash(q, ctx, mode, storyStep)
 
+  if (has(q, 'ontario', 'activations failing in ontario', 'why are activations failing', 'why is ontario red', 'ontario red', 'why is ontario critical', 'ontario critical')) {
+    return reply(
+      [
+        {
+          type: 'text',
+          text: 'Ontario is critical because 42 active exceptions are affecting 73 customers.',
+        },
+        {
+          type: 'text',
+          text: '38 are associated with the same Wireless Activation pattern. Billing and SIM assignment complete successfully, but HSS subscriber creation fails.',
+        },
+        {
+          type: 'text',
+          text: 'The failures began shortly after a provisioning configuration change.',
+        },
+        {
+          type: 'metrics',
+          rows: [
+            { label: 'Probable root cause', value: 'HSS endpoint configuration' },
+            { label: 'Confidence', value: '96%' },
+            { label: 'Customers impacted', value: '73' },
+            { label: 'Revenue at risk', value: '$18,450' },
+          ],
+        },
+      ],
+      {
+        risk: 'approval',
+        nextStoryStep: 'ready_retry',
+        actions: [
+          { id: 'investigate', label: 'Investigate', href: '/exceptions/EXC-2026-0146' },
+          { id: 'evidence', label: 'Show Evidence', kind: 'evidence' },
+          { id: 'impact', label: 'View Exceptions', href: '/exceptions?region=Ontario' },
+        ],
+      },
+    )
+  }
+
   if (
     ctx.page === 'marketplace' ||
+    ctx.page === 'integrations' ||
+    ctx.page === 'resolve' ||
     ctx.page === 'connector-detail' ||
-    has(q, 'connector marketplace', 'add connector', 'semantic discovery')
+    ctx.page === 'data-sources' ||
+    has(q, 'connector marketplace', 'add connector', 'semantic discovery', 'data sources', 'integrations')
   ) {
+    if (has(q, 'approval', 'why is approval')) {
+      return reply([
+        {
+          type: 'text',
+          text: 'Approval is required because this remediation writes to provisioning systems. Governance policy is APPROVAL REQUIRED for create and retry actions. Run a controlled test first, then Approve & Execute.',
+        },
+      ], { actions: [{ id: 'resolve', label: 'Open Resolve', href: '/resolve' }] })
+    }
     if (has(q, 'salesforce')) {
       return reply([
         {
           type: 'text',
-          text: 'Salesforce supplies customer, account, case and order context. Coreveo uses it to correlate complaints with technical exceptions and can create or update cases after a verified resolution. Writes are supervised.',
+          text: 'Salesforce supplies customer, account, case and order context. Coreveo uses it to correlate complaints with technical exceptions.',
         },
-      ], { actions: [{ id: 'sf', label: 'Open Salesforce', href: '/marketplace/salesforce' }] })
+      ], { actions: [{ id: 'sf', label: 'Open Salesforce', href: '/connected-systems/salesforce' }] })
     }
     if (has(q, 'servicenow')) {
       return reply([
         {
           type: 'text',
-          text: 'ServiceNow is a certified connector in this demo. Coreveo searches related incidents and knowledge, and can create an escalation. Updating or closing an incident requires approval.',
+          text: 'ServiceNow remains your ITSM system of record. TERA correlates exceptions to incidents when connected.',
         },
-      ], { actions: [{ id: 'sn', label: 'Open ServiceNow', href: '/marketplace/servicenow' }] })
+      ], { actions: [{ id: 'sn', label: 'Open ServiceNow', href: '/connected-systems/servicenow' }] })
     }
-    if (has(q, 'titan', 'hss', 'governance')) {
+    if (has(q, 'titan', 'hss', 'governance', 'contributing')) {
       return reply([
         {
           type: 'text',
-          text: 'Titan HSS lookup is read-only. Create, suspend and resume require approval. Delete is restricted and will not run in this demo.',
+          text: 'HSS and Provisioning are contributing to activation failures. Titan HSS lookup is read-only. Create and retry require approval.',
         },
-      ], { risk: 'read_only', actions: [{ id: 'hss', label: 'Open Titan HSS', href: '/marketplace/titan-hss' }] })
+      ], { risk: 'read_only', actions: [{ id: 'hss', label: 'Open Titan HSS', href: '/connected-systems/titan-hss' }] })
     }
     if (has(q, 'semantic')) {
       return reply([
         {
           type: 'text',
-          text: 'After an API contract is imported, Coreveo labels each endpoint with capability, entity, lifecycle stage, risk and execution policy. GET /accounts/{id} is Retrieve Billing Account, read-only. POST /subscriber is Create Network Subscriber, approval required.',
+          text: 'After connection, TERA discovers entities, identifiers and suggested journeys automatically. Advanced mapping stays under Advanced Configuration.',
         },
       ])
     }
     return reply([
       {
         type: 'text',
-        text: 'Connect DID inventory, billing, provisioning, HSS, CRM and ServiceNow to move from visibility to correlation and supervised resolution. The marketplace is synthetic — no live vendor APIs are called.',
+        text: 'Connect TERA to the systems you already use — Billing, Provisioning, HSS, Splunk, ServiceNow and more.',
       },
       {
         type: 'text',
-        text: 'Start with Salesforce and ServiceNow for customer/incident context, MIND Billing and Titan HSS for the activation path.',
+        text: 'No rip-and-replace. TERA creates intelligence across your existing stack. Connections in this demo are simulated.',
       },
-    ], { actions: [{ id: 'mkt', label: 'Open Marketplace', href: '/marketplace' }] })
+    ], { actions: [{ id: 'mkt', label: 'Open Connected Systems', href: '/connected-systems' }] })
   }
 
   if (storyStep === 'asked_activations' && (q === 'yes' || has(q, 'investigate', 'go ahead', 'please'))) {
@@ -259,10 +307,10 @@ export function generateAgentReply(
       [
         {
           type: 'text',
-          text: 'Impact report prepared (synthetic). 38 activations, $2,660 blocked MRR, four regions, one shared endpoint. Open Reports for the executive view.',
+          text: 'Impact summary prepared (synthetic). 38 activations, $18,450 revenue at risk, Ontario cluster. Open Insights for the learning view.',
         },
       ],
-      { actions: [{ id: 'reports', label: 'Open Reports', href: '/reports' }] },
+      { actions: [{ id: 'reports', label: 'Open Insights', href: '/insights' }] },
     )
   }
 
@@ -650,7 +698,7 @@ export function generateAgentReply(
     return reply([
       {
         type: 'text',
-        text: 'These are demo / illustrative metrics. MTTR declined from 41 minutes to 18 minutes across the week as diagnosis and auto-resolution rates rose. The August 29 exception count is higher because of the provisioning 404 cluster, not because investigation slowed. Potential operational savings shown on Reports are 62.4 hours today and 412 hours monthly in the comparison card.',
+        text: 'These are demo / illustrative metrics. MTTR declined from 41 minutes to 18 minutes across the week as diagnosis and auto-resolution rates rose. The August 29 exception count is higher because of the provisioning 404 cluster, not because investigation slowed. Potential operational savings shown in Insights are 62.4 hours today and 412 hours monthly in the comparison card.',
       },
     ])
   }

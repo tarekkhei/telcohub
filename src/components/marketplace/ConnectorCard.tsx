@@ -21,7 +21,7 @@ export function ConnectorCard({ connector }: { connector: ConnectorInstance }) {
   return (
     <button
       type="button"
-      onClick={() => navigate(`/marketplace/${connector.id}`)}
+      onClick={() => navigate(`/connected-systems/${connector.id}`)}
       className="h-full w-full text-left"
     >
       <Card className="h-full transition hover:border-accent/40 hover:shadow-[0_8px_24px_rgba(37,99,235,0.08)]">

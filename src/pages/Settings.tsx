@@ -16,11 +16,11 @@ export function Settings() {
   return (
     <div className="space-y-5">
       <PageHeader
-        eyebrow="Integrations"
+        eyebrow="Connected Systems"
         title="Settings"
-        subtitle="Connected OSS/BSS systems the agent can query during investigation. No live connections in this mockup."
+        subtitle="Systems TERA can query during investigation. Existing platforms remain systems of record."
         actions={
-          <Button variant="secondary" onClick={() => navigate('/marketplace')}>
+          <Button variant="secondary" onClick={() => navigate('/connected-systems')}>
             Connector Marketplace
           </Button>
         }

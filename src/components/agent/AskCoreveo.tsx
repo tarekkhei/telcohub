@@ -21,7 +21,7 @@ export function AskCoreveo() {
       <div className="mb-3 flex items-center gap-2">
         <Sparkles className="h-4 w-4 text-ai" />
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-ai">Ask TelcoHub</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-ai">Ask TERA</p>
           <h2 className="text-lg font-semibold text-navy-900">What do you want to investigate?</h2>
         </div>
       </div>
@@ -48,7 +48,7 @@ export function AskCoreveo() {
         <button
           type="submit"
           className="mb-0.5 flex h-9 w-9 items-center justify-center rounded-lg bg-ai text-white hover:bg-indigo-600"
-          aria-label="Ask TelcoHub"
+          aria-label="Ask TERA"
         >
           <ArrowUp className="h-4 w-4" />
         </button>
