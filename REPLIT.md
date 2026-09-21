@@ -103,6 +103,7 @@ First publish usually takes under a minute. Hosting is free on Static; transfer 
 
 | Symptom | Fix |
 |---|---|
+| `SyntaxError: Unexpected token '.'` in `vite.js` / `enableCompileCache?.()` | Replit Node is too old. Vite 8 needs **Node 20+**. Pull latest (includes `.replit` + `replit.nix` for Node 22), then **Restart Repl** / reopen the shell and run `node -v` (expect `v22.x`). Or install Node 22 in the Shell: `nix-env -iA nixpkgs.nodejs_22` then reopen the shell. |
 | Import shows no repos | Disconnect/reconnect GitHub under **Account → Git Providers**. For org repos, approve the Replit OAuth app. |
 | Preview blank / connection refused | Run with `--host 0.0.0.0`. |
 | Live site 404 on a detail page | Missing `deployment.rewrites` to `/index.html`. |
